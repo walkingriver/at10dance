@@ -1,0 +1,81 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <!-- ionic meta tags -->
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!-- custom meta tags -->
+    <meta name="format-detection" content="telephone=no"> <!-- no auto telephone linking -->
+
+    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- can be saved to home screen on ios -->
+    <title>at10dance</title>
+    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+
+    <!-- build:css styles/vendor.css -->
+    <!-- bower:css -->
+    <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:css main/styles/app.css -->
+    <!-- inject:css -->
+    <link rel="stylesheet" href="main/styles/main.css">
+    <!-- endinject -->
+    <!-- endbuild -->
+  </head>
+  <body ng-app="at10dance" animation="slide-left-right-ios7">
+  <div>
+    <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21">
+        <ion-side-menu-content>
+            <ion-nav-bar class="bar-stable">
+                <ion-nav-back-button></ion-nav-back-button>
+                <ion-nav-buttons side="left">
+                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+                </ion-nav-buttons>
+            </ion-nav-bar>
+            <ion-nav-view></ion-nav-view>
+        </ion-side-menu-content>
+        <ion-side-menu side="left" id="side-menu21">
+            <ion-header-bar class="bar-stable">
+                <div class="title">Menu</div>
+            </ion-header-bar>
+            <ion-content padding="false" class="side-menu-left has-header">
+                <ion-list data-componentid="list1">
+                    <ion-item ui-sref="home" menu-close="" data-componentid="list-item1">Home</ion-item>
+                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item2">Algebra</ion-item>
+                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item3">Biology</ion-item>
+                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item4">Chemistry</ion-item>
+                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item19">English</ion-item>
+                    <ion-item ui-sref="tabsController.students" menu-close="" data-componentid="list-item5">Setup</ion-item>
+                </ion-list>
+            </ion-content>
+        </ion-side-menu>
+    </ion-side-menus>
+</div>
+
+    <!-- will be a 404 during development -->
+    <script src="cordova.js"></script>
+
+    <!-- build:js scripts/vendor.js -->
+    <!-- bower:js -->
+    <script src="bower_components/angular/angular.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.js"></script>
+    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+    <script src="bower_components/ionic/release/js/ionic.js"></script>
+    <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
+    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+    <script src="bower_components/localforage/dist/localforage.js"></script>
+    <!-- endbower -->
+    <!-- endbuild -->
+
+    <!-- build:js scripts/app.js -->
+    <!-- inject:js -->
+    <script src="main/main.js"></script>
+    <script src="main/constants/config-const.js"></script>
+    <script src="app.js"></script>
+    <!-- endinject -->
+    <!-- endbuild -->
+  </body>
+</html>
