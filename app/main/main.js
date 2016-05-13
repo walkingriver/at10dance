@@ -10,11 +10,11 @@ angular.module('main', [
   // ROUTING with ui.router
   $urlRouterProvider.otherwise('/main');
   $stateProvider
-      .state('tabsController', {
-    url: '/page1',
-    templateUrl: 'main/templates/tabsController.html',
-    abstract:true
-  })
+    .state('tabsController', {
+      url: '/page1',
+      templateUrl: 'main/templates/tabsController.html',
+      abstract: true
+    })
 
   .state('home', {
     url: '/main',
