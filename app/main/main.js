@@ -12,22 +12,22 @@ angular.module('main', [
   $stateProvider
       .state('tabsController', {
     url: '/page1',
-    templateUrl: 'templates/tabsController.html',
+    templateUrl: 'main/templates/tabsController.html',
     abstract:true
   })
 
   .state('home', {
     url: '/main',
-    templateUrl: 'templates/home.html',
-    controller: 'homeCtrl'
+    templateUrl: 'main/templates/home.html',
+    controller: 'HomeCtrl'
   })
 
   .state('tabsController.students', {
     url: '/students',
     views: {
       'tab1': {
-        templateUrl: 'templates/students.html',
-        controller: 'studentsCtrl'
+        templateUrl: 'main/templates/students.html',
+        controller: 'StudentsCtrl'
       }
     }
   })
@@ -36,8 +36,8 @@ angular.module('main', [
     url: '/classes',
     views: {
       'tab2': {
-        templateUrl: 'templates/classes.html',
-        controller: 'classesCtrl'
+        templateUrl: 'main/templates/classes.html',
+        controller: 'ClassesCtrl'
       }
     }
   })
@@ -46,8 +46,8 @@ angular.module('main', [
     url: '/class/:id',
     views: {
       'tab2': {
-        templateUrl: 'templates/class.html',
-        controller: 'classCtrl'
+        templateUrl: 'main/templates/class.html',
+        controller: 'ClassCtrl'
       }
     }
   })
@@ -56,21 +56,21 @@ angular.module('main', [
     url: '/student/:id',
     views: {
       'tab1': {
-        templateUrl: 'templates/student.html',
-        controller: 'studentCtrl'
+        templateUrl: 'main/templates/student.html',
+        controller: 'StudentCtrl'
       }
     }
   })
 
   .state('message', {
     url: '/message/:id',
-    templateUrl: 'templates/message.html',
-    controller: 'messageCtrl'
+    templateUrl: 'main/templates/message.html',
+    controller: 'MessageCtrl'
   })
 
   .state('roster', {
     url: '/roster/:id',
-    templateUrl: 'templates/roster.html',
-    controller: 'rosterCtrl'
+    templateUrl: 'main/templates/roster.html',
+    controller: 'RosterCtrl'
   });
 });
