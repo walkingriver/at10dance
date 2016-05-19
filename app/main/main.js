@@ -27,7 +27,8 @@ angular.module('main', [
     views: {
       'tab1': {
         templateUrl: 'main/templates/students.html',
-        controller: 'StudentsCtrl'
+        controller: 'StudentsCtrl',
+        controllerAs: 'vm'
       }
     }
   })
