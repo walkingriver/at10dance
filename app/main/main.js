@@ -38,7 +38,8 @@ angular.module('main', [
     views: {
       'tab2': {
         templateUrl: 'main/templates/classes.html',
-        controller: 'ClassesCtrl'
+        controller: 'ClassesCtrl',
+        controllerAs: 'vm'
       }
     }
   })
