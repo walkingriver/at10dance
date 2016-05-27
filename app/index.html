@@ -41,13 +41,11 @@
                 <div class="title">Menu</div>
             </ion-header-bar>
             <ion-content padding="false" class="side-menu-left has-header">
-                <ion-list data-componentid="list1">
-                    <ion-item ui-sref="home" menu-close="" data-componentid="list-item1">Home</ion-item>
-                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item2">Algebra</ion-item>
-                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item3">Biology</ion-item>
-                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item4">Chemistry</ion-item>
-                    <ion-item ui-sref="roster" menu-close="" data-componentid="list-item19">English</ion-item>
-                    <ion-item ui-sref="tabsController.students" menu-close="" data-componentid="list-item5">Setup</ion-item>
+                <ion-list ng-controller="ClassesCtrl as vm">
+                    <ion-item ui-sref="home" menu-close="">Home</ion-item>
+                    <ion-item ng-repeat="class in vm.classes" menu-close
+                        ui-sref="roster({id:class._id})">{{class.name}}</ion-item>
+                    <ion-item ui-sref="tabsController.students" menu-close="">Setup</ion-item>
                 </ion-list>
             </ion-content>
         </ion-side-menu>
@@ -67,6 +65,7 @@
     <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
     <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
     <script src="bower_components/localforage/dist/localforage.js"></script>
+    <script src="bower_components/lodash/lodash.js"></script>
     <!-- endbower -->
     <!-- endbuild -->
 
@@ -75,6 +74,7 @@
     <script src="main/main.js"></script>
     <script src="main/services/student-service-serv.js"></script>
     <script src="main/services/class-service-serv.js"></script>
+    <script src="main/directives/students-dir.js"></script>
     <script src="main/controllers/students-ctrl.js"></script>
     <script src="main/controllers/student-ctrl.js"></script>
     <script src="main/controllers/roster-ctrl.js"></script>

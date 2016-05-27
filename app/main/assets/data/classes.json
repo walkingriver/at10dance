@@ -2,31 +2,37 @@
   {
     "_id": "5737124fc70634b21c828c7a",
     "index": 0,
-    "name": "English Lit"
+    "name": "English Lit",
+    "students": []
   },
   {
     "_id": "5737124f3928f5208a2793d8",
     "index": 1,
-    "name": "Geometry"
+    "name": "Geometry",
+    "students": []
   },
   {
     "_id": "5737124ff3ba20c66fbbda44",
     "index": 2,
-    "name": "Civics"
+    "name": "Civics",
+    "students": []
   },
   {
     "_id": "5737124f6bbdd0554bfae299",
     "index": 3,
-    "name": "Chemistry"
+    "name": "Chemistry",
+    "students": []
   },
   {
     "_id": "5737124f3ca096c4ba644cc2",
     "index": 4,
-    "name": "Civics"
+    "name": "Civics",
+    "students": []
   },
   {
     "_id": "5737124f3de45bda03d0e435",
     "index": 5,
-    "name": "US History"
+    "name": "US History",
+    "students": []
   }
 ]

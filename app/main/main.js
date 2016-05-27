@@ -11,7 +11,7 @@ angular.module('main', [
   $urlRouterProvider.otherwise('/main');
   $stateProvider
     .state('tabsController', {
-      url: '/page1',
+      url: '/tab',
       templateUrl: 'main/templates/tabsController.html',
       abstract: true
     })
@@ -49,7 +49,8 @@ angular.module('main', [
     views: {
       'tab2': {
         templateUrl: 'main/templates/class.html',
-        controller: 'ClassCtrl'
+        controller: 'ClassCtrl',
+        controllerAs: 'vm'
       }
     }
   })
@@ -73,6 +74,7 @@ angular.module('main', [
   .state('roster', {
     url: '/roster/:id',
     templateUrl: 'main/templates/roster.html',
-    controller: 'RosterCtrl'
+    controller: 'RosterCtrl',
+    controllerAs: 'vm'
   });
 });

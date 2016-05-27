@@ -1,8 +1,9 @@
 {
-  "extends": "eslint:recommended",
+  "extends": ["eslint:recommended", "plugin:lodash/recommended"],
   "env": {
     "node": true
   },
+  "plugins": ["lodash"],
   "rules": {
     // overrides from 'recommended'
     "comma-dangle": 0,

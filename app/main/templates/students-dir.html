@@ -1,0 +1,12 @@
+<form class="list">
+  <label class="item item-input">
+                <i class="icon ion-search placeholder-icon"></i>
+                <input type="search" placeholder="" ng-model="search">
+            </label>
+</form>
+<ion-list>
+  <ion-item ng-repeat="student in items | filter:{name:search}" 
+    class="item-icon-right" ng-click="selected(student)">{{student.name}}
+    <i class="icon {{icon}} {{color}}" ng-if="showPerson(student)" />
+  </ion-item>
+</ion-list>

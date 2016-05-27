@@ -1,26 +1,11 @@
 <ion-view title="Class" id="page8">
-    <ion-content padding="true" class="has-header">
-        <form class="list">
-            <label class="item item-input">
-                <input type="text" placeholder="Class Name">
+  <ion-content padding="true" class="has-header">
+    <form class="list">
+      <label class="item item-input">
+                <input type="text" placeholder="Class Name" ng-model="vm.class.name" />
             </label>
-        </form>
-        <h3 id="class-heading1" style="color:#3D3D3D;font-weight:300;">Assigned Students</h3>
-        <form class="list">
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="">
-            </label>
-        </form>
-        <ion-list>
-            <ion-checkbox>Mary</ion-checkbox>
-            <ion-checkbox>Billy</ion-checkbox>
-            <ion-checkbox>Bobby</ion-checkbox>
-            <ion-checkbox>Jenny</ion-checkbox>
-            <ion-checkbox>Kate</ion-checkbox>
-            <ion-checkbox>Lily</ion-checkbox>
-            <ion-checkbox>Monica</ion-checkbox>
-            <ion-checkbox>Tommy</ion-checkbox>
-        </ion-list>
-    </ion-content>
+    </form>
+    <h3 id="class-heading1" style="color:#3D3D3D;font-weight:300;">Assigned Students</h3>
+    <students items="vm.students" color="'positive'" icon="'ion-person'"" on-selected="vm.selectStudent" show-person="vm.isAssigned"/>
+  </ion-content>
 </ion-view>

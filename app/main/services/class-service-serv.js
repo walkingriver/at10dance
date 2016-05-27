@@ -17,6 +17,17 @@ angular.module('main')
         });
     };
 
+    this.getById = function (id) {
+      $log.log('Requesting class details for class id = ' + id);
+
+      if (classes.length) { return $q.when(_.find(classes, { '_id': id })); }
+
+      return init()
+        .then(function () {
+          return $q.when(_.find(classes, { '_id': id }));
+        });
+    };
+
     // "Private" methods
     function init() {
       return $http.get('/main/assets/data/classes.json')

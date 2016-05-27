@@ -1,14 +1,5 @@
 <ion-view title="Students" id="page6">
     <ion-content padding="true" class="has-header">
-        <form class="list">
-            <label class="item item-input">
-                <i class="icon ion-search placeholder-icon"></i>
-                <input type="search" placeholder="" ng-model="search">
-            </label>
-        </form>
-        <ion-list>
-            <ion-item ng-repeat="student in vm.students | filter:{name:search}" 
-            ui-sref="tabsController.student({id:student._id})">{{student.name}}</ion-item>
-        </ion-list>
+        <students items="vm.students" on-selected="vm.selectStudent"/>
     </ion-content>
 </ion-view>

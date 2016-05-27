@@ -1,11 +1,5 @@
-<ion-view title="Roster" id="page11">
+<ion-view title="{{vm.class.name}} Roster" id="page11">
     <ion-content padding="true" class="has-header">
-        <ion-list>
-            <ion-toggle toggle-class="toggle-balanced">Jenny</ion-toggle>
-            <ion-toggle toggle-class="toggle-balanced">Kate</ion-toggle>
-            <ion-toggle toggle-class="toggle-balanced">Lily</ion-toggle>
-            <ion-toggle toggle-class="toggle-balanced">Monica</ion-toggle>
-            <ion-toggle toggle-class="toggle-balanced">Tommy</ion-toggle>
-        </ion-list>
+        <students items="vm.students" color="'balanced'" icon="'ion-checkmark-circled'" on-selected="vm.selectStudent" show-person="vm.isPresent" />
     </ion-content>
 </ion-view>
