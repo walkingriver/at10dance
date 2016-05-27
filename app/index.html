@@ -1,90 +1,96 @@
 <!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="description" content="">
-    <!-- ionic meta tags -->
-    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
-    <!-- custom meta tags -->
-    <meta name="format-detection" content="telephone=no"> <!-- no auto telephone linking -->
 
-    <meta name="apple-mobile-web-app-capable" content="yes"> <!-- can be saved to home screen on ios -->
-    <title>at10dance</title>
-    <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="">
+  <!-- ionic meta tags -->
+  <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+  <!-- custom meta tags -->
+  <meta name="format-detection" content="telephone=no">
+  <!-- no auto telephone linking -->
 
-    <!-- build:css styles/vendor.css -->
-    <!-- bower:css -->
-    <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
-    <!-- endbower -->
-    <!-- endbuild -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <!-- can be saved to home screen on ios -->
+  <title>at10dance</title>
+  <!-- Place favicon.ico and apple-touch-icon.png in the root directory -->
 
-    <!-- build:css main/styles/app.css -->
-    <!-- inject:css -->
-    <link rel="stylesheet" href="main/styles/main.css">
-    <!-- endinject -->
-    <!-- endbuild -->
-  </head>
-  <body ng-app="at10dance" animation="slide-left-right-ios7">
+  <!-- build:css styles/vendor.css -->
+  <!-- bower:css -->
+  <link rel="stylesheet" href="bower_components/ionic/release/css/ionic.css" />
+  <!-- endbower -->
+  <!-- endbuild -->
+
+  <!-- build:css main/styles/app.css -->
+  <!-- inject:css -->
+  <link rel="stylesheet" href="main/styles/main.css">
+  <!-- endinject -->
+  <!-- endbuild -->
+</head>
+
+<body ng-app="at10dance" animation="slide-left-right-ios7">
   <div>
     <ion-side-menus enable-menu-with-back-views="false" data-componentid="side-menu21">
-        <ion-side-menu-content>
-            <ion-nav-bar class="bar-stable">
-                <ion-nav-back-button></ion-nav-back-button>
-                <ion-nav-buttons side="left">
-                    <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
-                </ion-nav-buttons>
-            </ion-nav-bar>
-            <ion-nav-view></ion-nav-view>
-        </ion-side-menu-content>
-        <ion-side-menu side="left" id="side-menu21">
-            <ion-header-bar class="bar-stable">
-                <div class="title">Menu</div>
-            </ion-header-bar>
-            <ion-content padding="false" class="side-menu-left has-header">
-                <ion-list ng-controller="ClassesCtrl as vm">
-                    <ion-item ui-sref="home" menu-close="">Home</ion-item>
-                    <ion-item ng-repeat="class in vm.classes" menu-close
-                        ui-sref="roster({id:class._id})">{{class.name}}</ion-item>
-                    <ion-item ui-sref="tabsController.students" menu-close="">Setup</ion-item>
-                </ion-list>
-            </ion-content>
-        </ion-side-menu>
+      <ion-side-menu-content>
+        <ion-nav-bar class="bar-stable">
+          <ion-nav-back-button></ion-nav-back-button>
+          <ion-nav-buttons side="left">
+            <button class="button button-icon button-clear ion-navicon" menu-toggle="left"></button>
+          </ion-nav-buttons>
+        </ion-nav-bar>
+        <ion-nav-view></ion-nav-view>
+      </ion-side-menu-content>
+      <ion-side-menu side="left" id="side-menu21">
+        <ion-header-bar class="bar-stable">
+          <div class="title">Menu</div>
+        </ion-header-bar>
+        <ion-content padding="false" class="side-menu-left has-header">
+          <ion-list ng-controller="ClassesCtrl as vm">
+            <ion-item class="item-icon-left" ui-sref="home" menu-close="">
+              <i class="icon ion-ios-home positive"></i>Home</ion-item>
+            <ion-item ng-repeat="class in vm.classes" menu-close ui-sref="roster({id:class._id})">{{class.name}}</ion-item>
+            <ion-item class="item-icon-left" ui-sref="tabsController.students" menu-close="">
+              <i class="icon ion-gear-b"></i>Setup</ion-item>
+          </ion-list>
+        </ion-content>
+      </ion-side-menu>
     </ion-side-menus>
-</div>
+  </div>
 
-    <!-- will be a 404 during development -->
-    <script src="cordova.js"></script>
+  <!-- will be a 404 during development -->
+  <script src="cordova.js"></script>
 
-    <!-- build:js scripts/vendor.js -->
-    <!-- bower:js -->
-    <script src="bower_components/angular/angular.js"></script>
-    <script src="bower_components/angular-animate/angular-animate.js"></script>
-    <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
-    <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
-    <script src="bower_components/ionic/release/js/ionic.js"></script>
-    <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
-    <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
-    <script src="bower_components/localforage/dist/localforage.js"></script>
-    <script src="bower_components/lodash/lodash.js"></script>
-    <!-- endbower -->
-    <!-- endbuild -->
+  <!-- build:js scripts/vendor.js -->
+  <!-- bower:js -->
+  <script src="bower_components/angular/angular.js"></script>
+  <script src="bower_components/angular-animate/angular-animate.js"></script>
+  <script src="bower_components/angular-sanitize/angular-sanitize.js"></script>
+  <script src="bower_components/angular-ui-router/release/angular-ui-router.js"></script>
+  <script src="bower_components/ionic/release/js/ionic.js"></script>
+  <script src="bower_components/ionic/release/js/ionic-angular.js"></script>
+  <script src="bower_components/ngCordova/dist/ng-cordova.js"></script>
+  <script src="bower_components/localforage/dist/localforage.js"></script>
+  <script src="bower_components/lodash/lodash.js"></script>
+  <!-- endbower -->
+  <!-- endbuild -->
 
-    <!-- build:js scripts/app.js -->
-    <!-- inject:js -->
-    <script src="main/main.js"></script>
-    <script src="main/services/student-service-serv.js"></script>
-    <script src="main/services/class-service-serv.js"></script>
-    <script src="main/directives/students-dir.js"></script>
-    <script src="main/controllers/students-ctrl.js"></script>
-    <script src="main/controllers/student-ctrl.js"></script>
-    <script src="main/controllers/roster-ctrl.js"></script>
-    <script src="main/controllers/message-ctrl.js"></script>
-    <script src="main/controllers/home-ctrl.js"></script>
-    <script src="main/controllers/classes-ctrl.js"></script>
-    <script src="main/controllers/class-ctrl.js"></script>
-    <script src="main/constants/config-const.js"></script>
-    <script src="app.js"></script>
-    <!-- endinject -->
-    <!-- endbuild -->
-  </body>
+  <!-- build:js scripts/app.js -->
+  <!-- inject:js -->
+  <script src="main/main.js"></script>
+  <script src="main/services/student-service-serv.js"></script>
+  <script src="main/services/class-service-serv.js"></script>
+  <script src="main/directives/students-dir.js"></script>
+  <script src="main/controllers/students-ctrl.js"></script>
+  <script src="main/controllers/student-ctrl.js"></script>
+  <script src="main/controllers/roster-ctrl.js"></script>
+  <script src="main/controllers/message-ctrl.js"></script>
+  <script src="main/controllers/home-ctrl.js"></script>
+  <script src="main/controllers/classes-ctrl.js"></script>
+  <script src="main/controllers/class-ctrl.js"></script>
+  <script src="main/constants/config-const.js"></script>
+  <script src="app.js"></script>
+  <!-- endinject -->
+  <!-- endbuild -->
+</body>
+
 </html>
