@@ -60,7 +60,8 @@ angular.module('main', [
     views: {
       'tab1': {
         templateUrl: 'main/templates/student.html',
-        controller: 'StudentCtrl'
+        controller: 'StudentCtrl',
+        controllerAs: 'vm'
       }
     }
   })

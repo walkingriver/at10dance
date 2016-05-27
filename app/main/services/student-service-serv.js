@@ -17,6 +17,17 @@ angular.module('main')
         });
 
     };
+    
+      this.getById = function (id) {
+      $log.log('Requesting class details for student id = ' + id);
+
+      if (students.length) { return $q.when(_.find(students, { '_id': id })); }
+
+      return init()
+        .then(function () {
+          return $q.when(_.find(students, { '_id': id }));
+        });
+    };
 
     // "Private" methods
     function init() {

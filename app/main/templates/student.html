@@ -1,23 +1,29 @@
 <ion-view title="Student" id="page9" style="background-color:#FFFFFF;">
     <ion-content padding="true" class="has-header">
         <div class="list card">
-            <div class="item item-divider">Card</div>
+            <div class="item item-divider">{{vm.student.name}}</div>
             <div class="item item-body">
-                <div style="line-height: 250px; border: 1px solid rgb(238, 238, 238); border-radius: 3px; text-align: center; background-color: rgb(255, 255, 255);">
-                    <i class="icon ion-image" style="font-size: 64px; color: rgb(136, 136, 136); vertical-align: middle;"></i>
-                </div>
+                <img class="full-image" src="{{vm.student.picture}}" alt="{{vm.student.name}}" />
                 <form class="list">
-                    <label class="item item-input">
-                        <input type="text" placeholder="Student's Name">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Student's Name</span>
+                        <input type="text" placeholder="Student's Name" ng-model="vm.student.name">
                     </label>
-                    <label class="item item-input">
-                        <input type="text" placeholder="Parent's Name">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Student's Age</span>
+                        <input type="number" placeholder="Student's Age" ng-model="vm.student.age">
                     </label>
-                    <label class="item item-input">
-                        <input type="email" placeholder="Parent's Email">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Parent's Name</span>
+                        <input type="text" placeholder="Parent's Name" ng-model="vm.student.parentName">
                     </label>
-                    <label class="item item-input">
-                        <input type="tel" placeholder="Parent's Phone">
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Parent's Email</span>
+                        <input type="email" placeholder="Parent's Email" ng-model="vm.student.email">
+                    </label>
+                    <label class="item item-input item-floating-label">
+                        <span class="input-label">Parent's Phone</span>
+                        <input type="tel" placeholder="Parent's Phone" ng-model="vm.student.phone">
                     </label>
                 </form>
             </div>
