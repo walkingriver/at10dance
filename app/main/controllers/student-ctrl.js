@@ -12,7 +12,7 @@ angular.module('main')
 
     function init() {
       StudentService.getById(vm.studentId)
-        .then(function(data){
+        .then(function(data) {
           vm.student = data;
         });
     }
