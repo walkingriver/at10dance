@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q) {
+  .service('ClassService', function ($http, $log, $q, Config) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
@@ -30,7 +30,7 @@ angular.module('main')
 
     // "Private" methods
     function init() {
-      return $http.get('/main/assets/data/classes.json')
+      return $http.get(Config.ENV.CLASSES_URL)
         .success(function (data) {
           classes = data;
         });

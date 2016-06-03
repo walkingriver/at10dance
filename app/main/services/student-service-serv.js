@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('StudentService', function ($http, $log, $q) {
+  .service('StudentService', function ($http, $log, $q, Config) {
 
     $log.log('Hello from your Service: Student in module main');
 
@@ -31,7 +31,7 @@ angular.module('main')
 
     // "Private" methods
     function init() {
-      return $http.get('/main/assets/data/students.json')
+      return $http.get(Config.ENV.STUDENTS_URL)
         .success(function (data) {
           students = data;
         });
