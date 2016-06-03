@@ -5,8 +5,8 @@ angular.module('main')
   // gulp environment: injects environment vars
   ENV: {
     /*inject-env*/
-    'SERVER_URL': 'https://DEVSERVER/api',
-    'SOME_OTHER_URL': '/proxy'
+    'CLASSES_URL': './main/assets/data/classes.json',
+    'STUDENTS_URL': './main/assets/data/students.json'
     /*endinject*/
   },
 
