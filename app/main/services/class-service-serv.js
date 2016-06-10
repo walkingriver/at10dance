@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, Config) {
+  .service('ClassService', function ($http, $log, $q, uuid2, Config) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
@@ -14,7 +14,11 @@ angular.module('main')
     this.getById = function (id) {
       $log.log('Requesting class details for class id = ' + id);
       if (id === 'new') {
-        return {id};
+        return $q.when({
+          _id: uuid2.newguid(),
+          name: 'New Class',
+          students: []
+        });
       }
 
       return $q.when(classes.getItem(id));
