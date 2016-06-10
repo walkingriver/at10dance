@@ -6,6 +6,7 @@ angular.module('main')
 
     var vm = this;
     vm.deleteClass = deleteClass;
+    vm.seedClasses = seedClasses;
 
     refreshClasses();
 
@@ -24,5 +25,10 @@ angular.module('main')
         .catch(function (err) {
           $log.log(err);
         });
+    }
+
+    function seedClasses() {
+      ClassService.seed()
+        .then(refreshClasses);
     }
   });

@@ -48,9 +48,12 @@
           <ion-list ng-controller="ClassesCtrl as vm">
             <ion-item class="item-icon-left" ui-sref="home" menu-close="">
               <i class="icon ion-ios-home positive"></i>Home</ion-item>
-            <ion-item ng-repeat="class in vm.classes" menu-close ui-sref="roster({id:class._id})">{{class.name}}</ion-item>
+            <ion-item class="item-icon-left" ng-repeat="class in vm.classes" menu-close="" ui-sref="roster({id:class._id})">
+              <i class="icon ion-ios-book"></i>{{class.name}}</ion-item>
             <ion-item class="item-icon-left" ui-sref="tabsController.students" menu-close="">
               <i class="icon ion-gear-b"></i>Setup</ion-item>
+            <ion-item class="item-icon-left" ng-click="vm.seedClasses()" menu-close="">
+              <i class="icon ion-flash"></i>Seed</ion-item>
           </ion-list>
         </ion-content>
       </ion-side-menu>
