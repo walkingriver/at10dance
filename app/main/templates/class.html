@@ -1,11 +1,16 @@
 <ion-view title="Class" id="page8">
+  <ion-nav-buttons side="right">
+    <button class="button button-clear" ng-click="vm.saveClass()">
+        Save
+      </button>
+  </ion-nav-buttons>
   <ion-content padding="true" class="has-header">
     <form class="list">
       <label class="item item-input">
-                <input type="text" placeholder="Class Name" ng-model="vm.class.name" />
-            </label>
+        <input type="text" placeholder="Class Name" ng-model="vm.class.name" />
+      </label>
     </form>
     <h3 id="class-heading1" style="color:#3D3D3D;font-weight:300;">Assigned Students</h3>
-    <students items="vm.students" color="'positive'" icon="'ion-person'"" on-selected="vm.selectStudent" show-person="vm.isAssigned"/>
+    <students items="vm.students" color="'positive'" icon="'ion-person'" " on-selected="vm.selectStudent " show-person="vm.isAssigned "/>
   </ion-content>
 </ion-view>

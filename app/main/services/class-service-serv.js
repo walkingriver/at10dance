@@ -4,35 +4,48 @@ angular.module('main')
 
     $log.log('Hello from your Service: ClassService in module main');
 
-    var classes = [];
+    var classes = localforage.createInstance({
+      name: 'at10-classes'
+    });
 
     // Public methods
-    this.getAll = function () {
-      $log.log('Get All Classes.');
-      if (classes.length) { return $q.when(classes); }
-
-      return init()
-        .then(function () {
-          return $q.when(classes);
-        });
-    };
+    this.getAll = getAllClasses;
 
     this.getById = function (id) {
       $log.log('Requesting class details for class id = ' + id);
+      if (id === 'new') {
+        return {id};
+      }
 
-      if (classes.length) { return $q.when(_.find(classes, { '_id': id })); }
+      return $q.when(classes.getItem(id));
+    };
 
-      return init()
-        .then(function () {
-          return $q.when(_.find(classes, { '_id': id }));
+    this.save = function (cls) {
+      return classes.setItem(cls._id, cls);
+    };
+
+    this.seed = function () {
+      return $http.get(Config.ENV.CLASSES_URL)
+        .success(function (data) {
+          var promises = _.map(data, function (val) {
+            return classes.setItem(val._id, val);
+          });
+
+          return $q.all(promises);
         });
     };
 
     // "Private" methods
-    function init() {
-      return $http.get(Config.ENV.CLASSES_URL)
-        .success(function (data) {
-          classes = data;
-        });
+    function getAllClasses() {
+      var deferred = $q.defer();
+      var allClasses = {};
+
+      classes.iterate(function (value, key) {
+        allClasses[key] = value;
+      }, function () {
+        deferred.resolve(allClasses);
+      });
+
+      return deferred.promise;
     }
   });

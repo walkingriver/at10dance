@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('ClassCtrl', function ($log, $stateParams, $q, ClassService, StudentService) {
+  .controller('ClassCtrl', function ($log, $q, $state, $stateParams, ClassService, StudentService) {
 
     $log.log('Hello from your Controller: ClassCtrl in module main:. This is your controller:', this);
 
@@ -10,6 +10,7 @@ angular.module('main')
     vm.students = [];
     vm.isAssigned = isStudentAssignedToClass;
     vm.selectStudent = selectStudent;
+    vm.saveClass = saveClass;
 
     init();
 
@@ -48,5 +49,17 @@ angular.module('main')
       } else {
         assignStudentToClass(student);
       }
+    }
+
+    function saveClass() {
+      $log.log('Saving class.');
+
+      ClassService.save(vm.class)
+        .then(function () {
+          $state.go('tabsController.classes');
+        })
+        .catch(function (err) {
+          $log.log(err);
+        });
     }
   });

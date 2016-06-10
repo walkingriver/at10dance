@@ -1,8 +1,13 @@
 <ion-view title="Classes" id="page7">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear button-positive icon ion-ios-plus-outline" ui-sref="tabsController.class({id:'new'})">
+      </button>
+    </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
         <ion-list>
-            <ion-item ng-repeat="class in vm.classes" 
-                ui-sref="tabsController.class({id:class._id})">{{class.name}}</ion-item>
+            <ion-item ng-repeat="class in vm.classes" ui-sref="tabsController.class({id:class._id})">{{class.name}}
+                <ion-option-button class="button button-assertive">Delete
+            </ion-item>
         </ion-list>
     </ion-content>
 </ion-view>
