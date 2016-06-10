@@ -11,7 +11,6 @@ angular.module('main')
     vm.isAssigned = isStudentAssignedToClass;
     vm.selectStudent = selectStudent;
     vm.saveClass = saveClass;
-    // vm.deleteClass = deleteClass;
 
     init();
 
