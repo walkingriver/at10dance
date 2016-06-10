@@ -6,7 +6,7 @@
     <ion-content padding="true" class="has-header">
         <ion-list>
             <ion-item ng-repeat="class in vm.classes" ui-sref="tabsController.class({id:class._id})">{{class.name}}
-                <ion-option-button class="button button-assertive">Delete
+                <ion-option-button class="button button-assertive" ng-click="vm.deleteClass(class._id)">Delete
             </ion-item>
         </ion-list>
     </ion-content>

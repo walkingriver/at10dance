@@ -28,6 +28,10 @@ angular.module('main')
       return classes.setItem(cls._id, cls);
     };
 
+    this.deleteClass = function (id) {
+      return classes.removeItem(id);
+    };
+
     this.seed = function () {
       return $http.get(Config.ENV.CLASSES_URL)
         .success(function (data) {
