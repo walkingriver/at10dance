@@ -14,7 +14,7 @@ angular.module('main')
     function refreshClasses() {
       ClassService.getAll()
         .then(function (data) {
-          $q.defer(vm.classes = data);
+          vm.classes = data;
         });
     }
 
@@ -22,14 +22,12 @@ angular.module('main')
       $log.log('Deleting class.');
 
       ClassService.deleteClass(id)
-        .then(refreshClasses)
         .catch(function (err) {
           $log.log(err);
         });
     }
 
     function seedClasses() {
-      ClassService.seed()
-        .then(refreshClasses);
+      ClassService.seed();
     }
   });

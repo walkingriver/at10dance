@@ -14,7 +14,7 @@ angular.module('main')
     function refreshStudents() {
       StudentService.getAll()
         .then(function (data) {
-          $q.defer(vm.students = data);
+          vm.students = data;
         });
     }
 
@@ -22,15 +22,13 @@ angular.module('main')
       $log.log('Deleting student.');
 
       StudentService.deleteStudent(id)
-        .then(refreshStudents)
         .catch(function (err) {
           $log.log(err);
         });
     }
 
     function seedStudents() {
-      StudentService.seed()
-        .then(refreshStudents);
+      StudentService.seed();
     }
 
     vm.selectStudent = function (student) {
