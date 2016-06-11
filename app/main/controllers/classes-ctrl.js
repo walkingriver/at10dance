@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('ClassesCtrl', function ($log, $q, ClassService) {
+  .controller('ClassesCtrl', function ($log, $q, $scope, ClassService) {
 
     $log.log('Hello from your Controller: ClassesCtrl in module main:. This is your controller:', this);
 
@@ -8,6 +8,7 @@ angular.module('main')
     vm.deleteClass = deleteClass;
     vm.seedClasses = seedClasses;
 
+    $scope.$watch(refreshClasses);
     refreshClasses();
 
     function refreshClasses() {

@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('StudentsCtrl', function ($log, $q, $state, StudentService) {
+  .controller('StudentsCtrl', function ($log, $q, $scope, $state, StudentService) {
 
     $log.log('Hello from your Controller: StudentsCtrl in module main:. This is your controller:', this);
 
@@ -8,6 +8,7 @@ angular.module('main')
     vm.deleteStudent = deleteStudent;
     vm.seedStudents = seedStudents;
 
+    $scope.$watch(refreshStudents);
     refreshStudents();
 
     function refreshStudents() {
