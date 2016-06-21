@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, uuid2, Config) {
+  .service('ClassService', function ($http, $log, $q, uuid, Config) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
@@ -15,7 +15,7 @@ angular.module('main')
       $log.log('Requesting class details for class id = ' + id);
       if (id === 'new') {
         return $q.when({
-          _id: uuid2.newguid(),
+          _id: uuid.newguid(),
           name: 'New Class',
           students: []
         });
@@ -41,6 +41,10 @@ angular.module('main')
 
           return $q.all(promises);
         });
+    };
+
+    this.clear = function () {
+      return classes.clear();
     };
 
     // "Private" methods

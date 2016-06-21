@@ -59,11 +59,13 @@
             "type": "cordova",
             "request": "launch",
             "platform": "ios",
-            "target": "emulator",
-            "port": 9220,
+            "target": "iPhone-4s",
+            "port": 9221,
             "sourceMaps": true,
             "cwd": "${workspaceRoot}",
-            "ionicLiveReload": false
+            "ionicLiveReload": false,
+            "attachAttempts": 10,
+            "attachDelay": 5000
         },
         {
             "name": "Attach to running android on emulator",

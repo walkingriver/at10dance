@@ -1,0 +1,21 @@
+<ion-view view-title="Debugging">
+  <!-- do you want padding? -->
+  <ion-content class="padding">
+
+    <!-- content goes here -->
+    <div class="button-bar">
+      <button class="button icon" ng-click="vm.seedClasses()">
+        <i class="ion-flash"></i> Classes</button>
+      <button class="button icon" ng-click="vm.seedStudents()">
+        <i class="ion-flash"></i> Students</button>
+      <button class="button icon" ng-click="vm.clear()">
+        <i class="ion-gear-a"></i> Clear All</button>
+    </div>
+    <ion-list>
+      <ion-item class="item item-text-wrap" ng-repeat="l in vm.logs">
+        {{l}}
+      </ion-item>
+    </ion-list>
+
+  </ion-content>
+</ion-view>
