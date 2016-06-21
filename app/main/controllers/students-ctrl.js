@@ -1,16 +1,18 @@
 'use strict';
 angular.module('main')
-  .controller('StudentsCtrl', function ($log, $q, $scope, $state, StudentService) {
+  .controller('StudentsCtrl', function ($log, $q, $rootScope, $scope, $state, StudentService) {
 
     $log.log('Hello from your Controller: StudentsCtrl in module main:. This is your controller:', this);
 
+    // Public binadable properties
     var vm = this;
     vm.deleteStudent = deleteStudent;
-    vm.seedStudents = seedStudents;
+    vm.selectStudent = selectStudent;
+    vm.showPerson = _.noop;
 
-    $scope.$watch(refreshStudents);
     refreshStudents();
 
+    // Private methods below
     function refreshStudents() {
       StudentService.getAll()
         .then(function (data) {
@@ -27,14 +29,17 @@ angular.module('main')
         });
     }
 
-    function seedStudents() {
-      StudentService.seed();
+    function selectStudent(student) {
+      $state.go('tabsController.student', { id: student._id });
     }
 
-    vm.selectStudent = function (student) {
-      $state.go('tabsController.student', { id: student._id });
-    };
+    // Event listeners
+    // Todo - something smarter with each of these
+    $scope.$on('studentSaved', refreshStudents);
 
-    vm.showPerson = _.noop;
+    $scope.$on('xxx', function () {
+      vm.students = [];
+    });
 
+    $scope.$on('studentDeleted', refreshStudents);
   });

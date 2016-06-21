@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('ClassCtrl', function ($log, $q, $state, $stateParams, ClassService, StudentService) {
+  .controller('ClassCtrl', function ($log, $q, $rootScope, $state, $stateParams, ClassService, StudentService) {
 
     $log.log('Hello from your Controller: ClassCtrl in module main:. This is your controller:', this);
 
@@ -56,6 +56,7 @@ angular.module('main')
 
       ClassService.save(vm.class)
         .then(function () {
+          $rootScope.$broadcast('classChanged');
           $state.go('tabsController.classes');
         })
         .catch(function (err) {

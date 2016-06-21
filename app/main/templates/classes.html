@@ -1,14 +1,17 @@
 <ion-view title="Classes" id="page7">
     <ion-nav-buttons side="right">
-        <button class="button button-clear button-positive icon ion-flash" ng-click="vm.seedClasses()">
-        <button class="button button-clear button-positive icon ion-ios-plus-outline" ui-sref="tabsController.class({id:'new'})">
+        <button class="button button-clear button-positive icon ion-ios-plus-outline" 
+            ui-sref="tabsController.class({id:'new'})">
       </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
         <ion-list>
             <ion-item class="item-divider item">Assign Students to...</ion-item>
-            <ion-item ng-repeat="class in vm.classes" ui-sref="tabsController.class({id:class._id})">{{class.name}}
-                <ion-option-button class="button button-assertive" ng-click="vm.deleteClass(class._id)">Delete
+            <ion-item ng-repeat="class in vm.classes" 
+                ui-sref="tabsController.class({id:class._id})">{{class.name}}
+                <ion-option-button class="button button-assertive" 
+                    ng-click="vm.deleteClass(class._id)">Delete
+                </ion-option-button>
             </ion-item>
         </ion-list>
     </ion-content>

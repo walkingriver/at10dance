@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, uuid, Config) {
+  .service('ClassService', function ($http, $log, $q, uuid, Config, Subscriptions) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
@@ -24,31 +24,50 @@ angular.module('main')
       return $q.when(classes.getItem(id));
     };
 
-    this.save = function (cls) {
-      return classes.setItem(cls._id, cls);
-    };
+    this.save = saveClass;
+
+    function saveClass (cls) {
+      $log.log('Saving class: ', cls);
+      return classes.setItem(cls._id, cls)
+        .then(function () {
+          Subscriptions.notify('classSaved', cls);
+        });
+    }
 
     this.deleteClass = function (id) {
-      return classes.removeItem(id);
+      $log.log('Deleting class: ', id);
+      return classes.removeItem(id)
+        .then(function () {
+          Subscriptions.notify('classDeleted', id);
+        });
     };
 
     this.seed = function () {
+      $log.log('Seeding classes...');
       return $http.get(Config.ENV.CLASSES_URL)
         .success(function (data) {
           var promises = _.map(data, function (val) {
-            return classes.setItem(val._id, val);
+            return saveClass(val);
           });
-
           return $q.all(promises);
+        })
+        .catch(function (ex) {
+          $log.error(ex);
         });
     };
 
     this.clear = function () {
-      return classes.clear();
+      $log.log('Clearing class database');
+      return classes.clear()
+        .then(function () {
+          Subscriptions.notify('classesCleared');
+        });
     };
 
     // "Private" methods
     function getAllClasses() {
+      $log.log('Retrieving all classes');
+
       var deferred = $q.defer();
       var allClasses = {};
 

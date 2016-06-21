@@ -1,7 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('StudentService', function ($http, $log, $q, uuid, Config) {
-
+  .service('StudentService', function ($http, $log, $q, uuid, Config, Subscriptions) {
     $log.log('Hello from your Service: Student in module main');
 
     var students = localforage.createInstance({
@@ -9,9 +8,45 @@ angular.module('main')
     });
 
     // Public methods
+    this.clear = clearStudents;
+    this.deleteStudent = deleteStudent;
     this.getAll = getAllStudents;
+    this.getById = getById;
+    this.save = saveStudent;
+    this.seed = seedStudents;
 
-    this.getById = function (id) {
+    // "Private" methods
+    function clearStudents () {
+      $log.log('Clearing student database');
+      return students.clear()
+        .then(function () {
+          Subscriptions.notify('xxx', {});
+        });
+    }
+
+    function deleteStudent (id) {
+      $log.log('Deleting student: ', id);
+      return students.removeItem(id)
+        .then(function () {
+          Subscriptions.notify('studentDeleted', id);
+        });
+    }
+
+    function getAllStudents() {
+      $log.log('Retrieving all students');
+      var deferred = $q.defer();
+      var all = [];
+
+      students.iterate(function (value) {
+        all.push(value);
+      }, function () {
+        deferred.resolve(all);
+      });
+
+      return deferred.promise;
+    }
+
+    function getById (id) {
       $log.log('Requesting class details for student id = ' + id);
       if (id === 'new') {
         return $q.when({
@@ -32,42 +67,27 @@ angular.module('main')
       }
 
       return $q.when(students.getItem(id));
-    };
+    }
 
-    this.save = function (student) {
-      return students.setItem(student._id, student);
-    };
+    function saveStudent(student) {
+      $log.log('Saving student: ', student);
+      return students.setItem(student._id, student)
+        .then(function () {
+          Subscriptions.notify('studentSaved', student);
+        });
+    }
 
-    this.deleteStudent = function (id) {
-      return students.removeItem(id);
-    };
-
-    this.seed = function () {
+    function seedStudents () {
+      $log.log('Seeding students...');
       return $http.get(Config.ENV.STUDENTS_URL)
         .success(function (data) {
           var promises = _.map(data, function (val) {
-            return students.setItem(val._id, val);
+            return saveStudent(val);
           });
-
           return $q.all(promises);
+        })
+        .catch(function (ex) {
+          $log.error(ex);
         });
-    };
-
-    this.clear = function () {
-      return students.clear();
-    };
-
-    // "Private" methods
-    function getAllStudents() {
-      var deferred = $q.defer();
-      var all = [];
-
-      students.iterate(function (value) {
-        all.push(value);
-      }, function () {
-        deferred.resolve(all);
-      });
-
-      return deferred.promise;
     }
   });

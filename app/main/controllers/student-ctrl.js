@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('StudentCtrl', function ($log, $q, $state, $stateParams, StudentService) {
+  .controller('StudentCtrl', function ($log, $q, $rootScope, $state, $stateParams, StudentService) {
 
     $log.log('Hello from your Controller: StudentCtrl in module main:. This is your controller:', this);
 
@@ -19,7 +19,7 @@ angular.module('main')
     }
 
     function saveStudent() {
-      $log.log('Saving Student.');
+      $log.log('Saving Student: ', vm.student);
 
       StudentService.save(vm.student)
         .then(function () {

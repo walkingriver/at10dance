@@ -1,10 +1,12 @@
 <ion-view title="Students" id="page6">
     <ion-nav-buttons side="right">
-        <button class="button button-clear button-positive icon ion-flash" ng-click="vm.seedStudents()">
         <button class="button button-clear button-positive icon ion-person-add" ui-sref="tabsController.student({id:'new'})">
       </button>
     </ion-nav-buttons>
     <ion-content padding="true" class="has-header">
         <students items="vm.students" on-selected="vm.selectStudent" />
+        <ul>
+            <li ng-repeat="s in vm.students">{{s.name}}</li>
+        </ul>
     </ion-content>
 </ion-view>

@@ -5,15 +5,22 @@ angular.module('main')
     $log.log('Hello from your Controller: ClassesCtrl in module main:. This is your controller:', this);
 
     var vm = this;
+    vm.classes = {};
     vm.deleteClass = deleteClass;
-    vm.seedClasses = seedClasses;
 
-    $scope.$watch(refreshClasses);
+    $scope.$on('classesCleared', function () {
+      vm.classes = {};
+    });
+    $scope.$on('classSaved', function(message, data) {
+      vm.classes[data._id] = data;
+    });
+    $scope.$on('classDeleted', refreshClasses);
     refreshClasses();
 
     function refreshClasses() {
       ClassService.getAll()
         .then(function (data) {
+          vm.classes = {};
           vm.classes = data;
         });
     }
@@ -25,9 +32,5 @@ angular.module('main')
         .catch(function (err) {
           $log.log(err);
         });
-    }
-
-    function seedClasses() {
-      ClassService.seed();
     }
   });
