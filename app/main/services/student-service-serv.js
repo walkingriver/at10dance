@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('StudentService', function ($http, $log, $q, uuid, Config, Subscriptions) {
+  .service('StudentService', function ($http, $log, $q, uuid, Config, Messages, Subscriptions) {
     $log.log('Hello from your Service: Student in module main');
 
     var students = localforage.createInstance({
@@ -20,7 +20,7 @@ angular.module('main')
       $log.log('Clearing student database');
       return students.clear()
         .then(function () {
-          Subscriptions.notify('xxx', {});
+          Subscriptions.notify(Messages.studentsCleared, {});
         });
     }
 
@@ -28,7 +28,7 @@ angular.module('main')
       $log.log('Deleting student: ', id);
       return students.removeItem(id)
         .then(function () {
-          Subscriptions.notify('studentDeleted', id);
+          Subscriptions.notify(Messages.studentsDeleted, id);
         });
     }
 
@@ -73,7 +73,7 @@ angular.module('main')
       $log.log('Saving student: ', student);
       return students.setItem(student._id, student)
         .then(function () {
-          Subscriptions.notify('studentSaved', student);
+          Subscriptions.notify(Messages.studentSaved, student);
         });
     }
 

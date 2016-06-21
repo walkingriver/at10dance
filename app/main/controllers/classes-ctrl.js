@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('ClassesCtrl', function ($log, $q, $scope, ClassService) {
+  .controller('ClassesCtrl', function ($log, $q, $scope, $timeout, ClassService, Messages) {
 
     $log.log('Hello from your Controller: ClassesCtrl in module main:. This is your controller:', this);
 
@@ -8,21 +8,21 @@ angular.module('main')
     vm.classes = {};
     vm.deleteClass = deleteClass;
 
-    $scope.$on('classesCleared', function () {
-      vm.classes = {};
-    });
-    $scope.$on('classSaved', function(message, data) {
-      vm.classes[data._id] = data;
-    });
-    $scope.$on('classDeleted', refreshClasses);
-    refreshClasses();
+    init();
 
-    function refreshClasses() {
-      ClassService.getAll()
-        .then(function (data) {
-          vm.classes = {};
-          vm.classes = data;
-        });
+    // Private methods
+    function init() {
+      $scope.$on(Messages.classesCleared, function () {
+        vm.classes = {};
+      });
+      $scope.$on(Messages.classSaved, function (message, data) {
+        vm.classes[data._id] = data;
+      });
+      $scope.$on(Messages.classDeleted, function (message, id) {
+        _.remove(vm.classes, { _id: id });
+      });
+
+      refreshClasses();
     }
 
     function deleteClass(id) {
@@ -31,6 +31,14 @@ angular.module('main')
       ClassService.deleteClass(id)
         .catch(function (err) {
           $log.log(err);
+        });
+    }
+
+    function refreshClasses() {
+      ClassService.getAll()
+        .then(function (data) {
+          vm.classes = {};
+          vm.classes = data;
         });
     }
   });

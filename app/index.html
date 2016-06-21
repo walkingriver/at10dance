@@ -45,10 +45,10 @@
           <div class="title">Menu</div>
         </ion-header-bar>
         <ion-content padding="false" class="side-menu-left has-header">
-          <ion-list ng-controller="ClassesCtrl as vm">
+          <ion-list ng-controller="ClassesCtrl as menu">
             <ion-item class="item-icon-left" ui-sref="home" menu-close="">
               <i class="icon ion-ios-home positive"></i>Home</ion-item>
-            <ion-item class="item-icon-left" ng-repeat="class in vm.classes" menu-close="" ui-sref="roster({id:class._id})">
+            <ion-item class="item-icon-left" ng-repeat="class in menu.classes" menu-close="" ui-sref="roster({id:class._id})">
               <i class="icon ion-ios-book"></i>{{class.name}}</ion-item>
             <ion-item class="item-icon-left" ui-sref="tabsController.students" menu-close="">
               <i class="icon ion-gear-b"></i>Setup</ion-item>
@@ -94,6 +94,7 @@
   <script src="main/controllers/debug-ctrl.js"></script>
   <script src="main/controllers/classes-ctrl.js"></script>
   <script src="main/controllers/class-ctrl.js"></script>
+  <script src="main/constants/messages-const.js"></script>
   <script src="main/constants/config-const.js"></script>
   <script src="app.js"></script>
   <!-- endinject -->

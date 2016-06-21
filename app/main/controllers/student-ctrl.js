@@ -1,6 +1,7 @@
 'use strict';
 angular.module('main')
-  .controller('StudentCtrl', function ($log, $q, $rootScope, $state, $stateParams, StudentService) {
+  .controller('StudentCtrl', function ($log, $q, $rootScope, $state, $stateParams, Messages,
+    StudentService, Subscriptions) {
 
     $log.log('Hello from your Controller: StudentCtrl in module main:. This is your controller:', this);
 
@@ -13,7 +14,7 @@ angular.module('main')
 
     function init() {
       StudentService.getById(vm.studentId)
-        .then(function(data) {
+        .then(function (data) {
           vm.student = data;
         });
     }
@@ -23,6 +24,7 @@ angular.module('main')
 
       StudentService.save(vm.student)
         .then(function () {
+          Subscriptions.notify(Messages.studentSaved, vm.student);
           $state.go('tabsController.students');
         })
         .catch(function (err) {

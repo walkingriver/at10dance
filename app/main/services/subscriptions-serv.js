@@ -8,6 +8,7 @@ angular.module('main')
 
   // Private Methods
   function notifySubscribers (message, data) {
+    $log.debug('Sending Notification: ', message, data);
     $rootScope.$broadcast(message, data);
   }
 });

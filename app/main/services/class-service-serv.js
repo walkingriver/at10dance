@@ -1,6 +1,6 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, uuid, Config, Subscriptions) {
+  .service('ClassService', function ($http, $log, $q, uuid, Config, Messages, Subscriptions) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
@@ -30,7 +30,7 @@ angular.module('main')
       $log.log('Saving class: ', cls);
       return classes.setItem(cls._id, cls)
         .then(function () {
-          Subscriptions.notify('classSaved', cls);
+          Subscriptions.notify(Messages.classSaved, cls);
         });
     }
 
@@ -38,7 +38,7 @@ angular.module('main')
       $log.log('Deleting class: ', id);
       return classes.removeItem(id)
         .then(function () {
-          Subscriptions.notify('classDeleted', id);
+          Subscriptions.notify(Messages.classDeleted, id);
         });
     };
 
@@ -60,7 +60,7 @@ angular.module('main')
       $log.log('Clearing class database');
       return classes.clear()
         .then(function () {
-          Subscriptions.notify('classesCleared');
+          Subscriptions.notify(Messages.classesCleared, {});
         });
     };
 
