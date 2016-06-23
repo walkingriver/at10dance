@@ -14,13 +14,15 @@ angular.module('main', [
       .state('tabsController', {
         url: '/tab',
         templateUrl: 'main/templates/tabsController.html',
-        abstract: true
+        abstract: true,
+        // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
       })
 
       .state('home', {
         url: '/main',
         templateUrl: 'main/templates/home.html',
-        controller: 'HomeCtrl'
+        controller: 'HomeCtrl',
+        // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
       })
 
       .state('tabsController.students', {
@@ -29,7 +31,8 @@ angular.module('main', [
           'tab1': {
             templateUrl: 'main/templates/students.html',
             controller: 'StudentsCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
           }
         }
       })
@@ -40,7 +43,8 @@ angular.module('main', [
           'tab2': {
             templateUrl: 'main/templates/classes.html',
             controller: 'ClassesCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            resolve: { ClassService: 'ClassService' }
           }
         }
       })
@@ -51,7 +55,8 @@ angular.module('main', [
           'tab2': {
             templateUrl: 'main/templates/class.html',
             controller: 'ClassCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            resolve: { ClassService: 'ClassService' }
           }
         }
       })
@@ -62,7 +67,8 @@ angular.module('main', [
           'tab1': {
             templateUrl: 'main/templates/student.html',
             controller: 'StudentCtrl',
-            controllerAs: 'vm'
+            controllerAs: 'vm',
+            // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
           }
         }
       })
@@ -70,21 +76,30 @@ angular.module('main', [
       .state('message', {
         url: '/message/:id',
         templateUrl: 'main/templates/message.html',
-        controller: 'MessageCtrl'
+        controller: 'MessageCtrl',
+        // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
       })
 
       .state('debug', {
         url: '/debug',
         templateUrl: 'main/templates/debug.html',
         controller: 'DebugCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        // resolve: {
+        //   DataService: function (dataservice) {
+        //     return dataservice.ready();
+        //   },
+        //   CallerService: 'CallerService',
+        //   StudentService: 'StudentService'
+        // }
       })
 
       .state('roster', {
         url: '/roster/:id',
         templateUrl: 'main/templates/roster.html',
         controller: 'RosterCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        // resolve: { DataService: function (dataservice) { return dataservice.ready(); } }
       });
   });
 

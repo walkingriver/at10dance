@@ -1,10 +1,9 @@
 'use strict';
 angular.module('main')
   .constant('Messages', {
-    studentSaved: 'student:Saved',
-    studentDeleted: 'student:Deleted',
-    studentsCleared: 'students:Cleared',
-    classSaved: 'class:Saved',
-    classDeleted: 'class:Deleted',
-    classesCleared: 'classes:Cleared'
+    studentSaved: '@10:studentSaved',
+    studentDeleted: '@10:studentDeleted',
+    classSaved: '@10:classSaved',
+    classDeleted: '@10:classDeleted',
+    databaseCleared: '@10:dataCleared'
   });

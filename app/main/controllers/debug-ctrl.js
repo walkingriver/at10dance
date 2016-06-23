@@ -1,32 +1,21 @@
 'use strict';
 angular.module('main')
   .controller('DebugCtrl', function ($log, $rootScope, $scope, $timeout,
-    logCollector, ClassService, Messages, StudentService, Subscriptions) {
+    logCollector, dataservice) {
     var vm = this;
     vm.logs = [];
 
     $log.log('Hello from your Controller: DebugCtrl in module main:. This is your controller:', this);
 
     // Public methods
-    vm.seedClasses = seedClasses;
-    vm.seedStudents = seedStudents;
+    vm.seed = seed;
     vm.clear = clearAll;
 
     $timeout(refreshLogs, 5000);
 
     // Private methods
-    function seedClasses() {
-      ClassService.seed()
-        .then(function () {
-          Subscriptions.notify(Messages.classSaved, {});
-        });
-    }
-
-    function seedStudents() {
-      StudentService.seed()
-        .then(function () {
-          Subscriptions.notify(Messages.studentSaved, {});
-        });
+    function seed() {
+      dataservice.seed();
     }
 
     function refreshLogs() {
@@ -35,8 +24,7 @@ angular.module('main')
     }
 
     function clearAll() {
-      return StudentService.clear()
-        .then(ClassService.clear)
+      return dataservice.clear()
         .then(function () {
           $log.log('Database clear complete.');
         })

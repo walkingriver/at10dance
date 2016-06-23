@@ -1,82 +1,64 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, uuid, Config, Messages, Subscriptions) {
+  .factory('ClassService', function ($http, $log, $q, uuid, Config, dataservice, Messages, Subscriptions) {
 
     $log.log('Hello from your Service: ClassService in module main');
 
-    var classes = localforage.createInstance({
-      name: 'at10-classes'
-    });
+    var allClasses = null;
+    var isLoaded = false;
 
     // Public methods
-    this.getAll = getAllClasses;
+    var service = {
+      deleteClass: deleteClass,
+      getAll: getAllClasses,
+      getById: getById,
+      save: saveClass
+    };
 
-    this.getById = function (id) {
-      $log.log('Requesting class details for class id = ' + id);
+    return service;
+
+    // Private methods
+    function deleteClass(id) {
+      return dataservice.removeItem(id)
+        .then(function () {
+          Subscriptions.notify(Messages.classDeleted, id);
+          _.remove(allClasses, { _id: id });
+        });
+    }
+
+    function getAllClasses() {
+      if (isLoaded || allClasses) {
+        return $q.when(allClasses)
+          .then(function (data) {
+            allClasses = data;
+            isLoaded = true;
+          });
+      }
+      return dataservice.getAllClasses();
+    }
+
+    function getById(id) {
       if (id === 'new') {
         return $q.when({
           _id: uuid.newguid(),
           name: 'New Class',
           students: []
         });
+      } else if (allClasses[id]) {
+        return $q.when(allClasses[id]);
+      } else {
+        return dataservice.getById(id)
+          .then(function (data) {
+            allClasses[id] = data;
+          });
       }
-
-      return $q.when(classes.getItem(id));
-    };
-
-    this.save = saveClass;
-
-    function saveClass (cls) {
-      $log.log('Saving class: ', cls);
-      return classes.setItem(cls._id, cls)
-        .then(function () {
-          Subscriptions.notify(Messages.classSaved, cls);
-        });
     }
 
-    this.deleteClass = function (id) {
-      $log.log('Deleting class: ', id);
-      return classes.removeItem(id)
+    function saveClass(cls) {
+      return dataservice.saveItem(cls._id, cls)
         .then(function () {
-          Subscriptions.notify(Messages.classDeleted, id);
+          allClasses[cls._id] = cls;
+          Subscriptions.notify(Messages.classSaved, cls);
         });
-    };
-
-    this.seed = function () {
-      $log.log('Seeding classes...');
-      return $http.get(Config.ENV.CLASSES_URL)
-        .success(function (data) {
-          var promises = _.map(data, function (val) {
-            return saveClass(val);
-          });
-          return $q.all(promises);
-        })
-        .catch(function (ex) {
-          $log.error(ex);
-        });
-    };
-
-    this.clear = function () {
-      $log.log('Clearing class database');
-      return classes.clear()
-        .then(function () {
-          Subscriptions.notify(Messages.classesCleared, {});
-        });
-    };
-
-    // "Private" methods
-    function getAllClasses() {
-      $log.log('Retrieving all classes');
-
-      var deferred = $q.defer();
-      var allClasses = {};
-
-      classes.iterate(function (value, key) {
-        allClasses[key] = value;
-      }, function () {
-        deferred.resolve(allClasses);
-      });
-
-      return deferred.promise;
     }
   });
