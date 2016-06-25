@@ -175,8 +175,14 @@ angular.module('main')
     function clearDatabase() {
       return db.clear()
         .then(function () {
-          _.remove(pool.class, _.constant(true));
-          _.remove(pool.student, _.constant(true));
+          // Upon success, remove the objects from our pool.
+          // Note, this needs to keep the pool references intact for the other controllers.
+          _.forEach(_.keys(pool.class), function (val) {
+            delete pool.class[val];
+          });
+          _.forEach(_.keys(pool.students), function (val) {
+            delete pool.class[val];
+          });
         });
     }
   });
