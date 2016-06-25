@@ -8,7 +8,6 @@ angular.module('main')
     vm.deleteStudent = deleteStudent;
     vm.seedStudents = seedStudents;
 
-    $scope.$watch(refreshStudents);
     refreshStudents();
 
     function refreshStudents() {

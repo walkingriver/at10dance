@@ -8,7 +8,6 @@ angular.module('main')
     vm.deleteClass = deleteClass;
     vm.seedClasses = seedClasses;
 
-    $scope.$watch(refreshClasses);
     refreshClasses();
 
     function refreshClasses() {
@@ -22,6 +21,7 @@ angular.module('main')
       $log.log('Deleting class.');
 
       ClassService.deleteClass(id)
+        // .then(function () { $scope.$apply(); })
         .catch(function (err) {
           $log.log(err);
         });

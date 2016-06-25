@@ -4,12 +4,10 @@
 
     <!-- content goes here -->
     <div class="button-bar">
-      <button class="button icon" ng-click="vm.seedClasses()">
-        <i class="ion-flash"></i> Classes</button>
-      <button class="button icon" ng-click="vm.seedStudents()">
-        <i class="ion-flash"></i> Students</button>
-      <button class="button icon" ng-click="vm.clear()">
-        <i class="ion-gear-a"></i> Clear All</button>
+      <button class="button icon" ng-click="vm.seedDatabase()">
+        <i class="ion-flash"></i> Seed Data</button>
+      <button class="button icon" ng-click="vm.clearDatabase()">
+        <i class="ion-gear-a"></i> Clear Data</button>
     </div>
     <ion-list>
       <ion-item class="item item-text-wrap" ng-repeat="l in vm.logs">
