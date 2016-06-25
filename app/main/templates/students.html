@@ -1,9 +1,14 @@
 <ion-view title="Students" id="page6">
-    <ion-nav-buttons side="right">
-        <button class="button button-clear button-positive icon ion-person-add" ui-sref="tabsController.student({id:'new'})">
-      </button>
-    </ion-nav-buttons>
-    <ion-content padding="true" class="has-header">
-        <students items="vm.students" on-selected="vm.selectStudent" />
-    </ion-content>
+  <ion-nav-buttons side="right">
+    <button class="button button-clear button-positive icon ion-ios-minus-outline" 
+      ng-click="vm.toggleDelete()">
+    </button>
+    <button class="button button-clear button-positive icon ion-ios-plus-outline" 
+      ui-sref="tabsController.student({id:'new'})">
+    </button>
+  </ion-nav-buttons>
+  <ion-content padding="true" class="has-header">
+    <students items="vm.students" show-delete="vm.showDelete" on-deleted="vm.deleteStudent" 
+      on-selected="vm.selectStudent" />
+  </ion-content>
 </ion-view>

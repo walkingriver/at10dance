@@ -7,6 +7,8 @@ angular.module('main')
     scope: {
       items: '=',
       selected: '=onSelected',
+      deleted: '=onDeleted',
+      showDelete: '=showDelete',
       showPerson: '=showPerson',
       icon: '=',
       color: '='

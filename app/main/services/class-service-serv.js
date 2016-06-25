@@ -3,8 +3,8 @@ angular.module('main')
   .factory('ClassService', function ($http, $log, $q, uuid, Config, dataManager) {
     $log.log('Hello from your Service: ClassService in module main');
 
+    // Public methods
     var service = {
-      // Public methods
       getAll: getAll,
       getById: getById,
       deleteClass: deleteClass,
@@ -13,29 +13,32 @@ angular.module('main')
 
     return service;
 
+    // Private methods
     function getAll() {
       return dataManager.getClasses();
     }
 
-    function getById (id) {
+    function getById(id) {
       $log.log('Requesting class details for class id = ' + id);
-      if (id === 'new') {
-        return $q.when({
-          _id: uuid.newguid(),
-          name: 'New Class',
-          kind: 'class',
-          students: []
-        });
-      }
-
-      return dataManager.getClassDetails(id);
+      return (id === 'new') ?
+        defaultClass() :
+        dataManager.getClassDetails(id);
     }
 
-    function save (cls) {
+    function save(cls) {
       return dataManager.setItem(cls);
     }
 
-    function deleteClass (id) {
+    function deleteClass(id) {
       return dataManager.removeItem(id);
+    }
+
+    function defaultClass() {
+      return $q.when({
+        _id: uuid.newguid(),
+        name: 'New Class',
+        kind: 'class',
+        students: []
+      });
     }
   });

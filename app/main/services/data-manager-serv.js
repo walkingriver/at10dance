@@ -148,19 +148,31 @@ angular.module('main')
     function removeItem(id) {
       return db.removeItem(id)
         .then(function () {
-          // Remove it from the appropriate pool
+          // Remove it from the appropriate pool.
+          // We could use an if statement here to avoid affecting both pools,
+          // but this is simpler. There is no danger if we try to delete
+          // something that doesn't exist.
           delete pool.class[id];
           delete pool.student[id];
         });
     }
 
-    // Debugging functionality
+    // Debugging functionality /////////////////////////////////////////////////
+    //
     // Seeds the database with sample class and stsudent values.
     function seedDatabase() {
-      return $http.get(Config.ENV.CLASSES_URL)
+      return $q.all([
+        seedItems('class', Config.ENV.CLASSES_URL),
+        seedItems('student', Config.ENV.STUDENTS_URL)
+      ]);
+    }
+
+    // Seeds the database with values from a given file.
+    function seedItems(kind, url) {
+      return $http.get(url)
         .success(function (data) {
           var promises = _.map(data, function (val) {
-            val.kind = 'class';
+            val.kind = kind;
 
             // We want to call setItem, because it ensures the value
             // get sent to the internal pool as well as the database.

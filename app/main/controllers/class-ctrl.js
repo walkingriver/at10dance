@@ -1,7 +1,6 @@
 'use strict';
 angular.module('main')
-  .controller('ClassCtrl', function ($log, $q, $state, $stateParams, ClassService) {
-
+  .controller('ClassCtrl', function ($log, $q, $state, $stateParams, ClassService, StudentService) {
     $log.log('Hello from your Controller: ClassCtrl in module main:. This is your controller:', this);
 
     var vm = this;
@@ -18,6 +17,11 @@ angular.module('main')
       ClassService.getById(vm.classId)
         .then(function (data) {
           $q.defer(vm.class = data);
+        });
+
+      StudentService.getAll()
+        .then(function (data) {
+          $q.defer(vm.students = _.toArray(data));
         });
     }
 

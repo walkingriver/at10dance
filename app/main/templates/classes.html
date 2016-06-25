@@ -13,12 +13,6 @@
             <ion-item ng-repeat="class in vm.classes" class="item-remove-animate"
               ui-sref="tabsController.class({id:class._id})">
                 {{class.name}}
-                <!--<ion-option-button class="button button-calm" >
-                    Edit
-                </ion-option-button>
-                <ion-option-button class="button button-assertive" ng-click="vm.deleteClass(class._id)">
-                    Delete
-                </ion-option-button>-->
                 <ion-delete-button class="ion-minus-circled"
                     ng-click="vm.deleteClass(class._id)">
                 </ion-delete-button>
