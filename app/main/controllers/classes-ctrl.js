@@ -1,12 +1,11 @@
 'use strict';
 angular.module('main')
   .controller('ClassesCtrl', function ($log, $q, $scope, ClassService) {
-
     $log.log('Hello from your Controller: ClassesCtrl in module main:. This is your controller:', this);
 
     var vm = this;
     vm.deleteClass = deleteClass;
-    vm.seedClasses = seedClasses;
+    vm.showDelete = false;
 
     refreshClasses();
 
@@ -21,13 +20,9 @@ angular.module('main')
       $log.log('Deleting class.');
 
       ClassService.deleteClass(id)
-        // .then(function () { $scope.$apply(); })
+        .then(refreshClasses)
         .catch(function (err) {
           $log.log(err);
         });
-    }
-
-    function seedClasses() {
-      ClassService.seed();
     }
   });
