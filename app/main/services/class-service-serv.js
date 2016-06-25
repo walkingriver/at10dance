@@ -28,7 +28,7 @@ angular.module('main')
         });
       }
 
-      return dataManager.getItem(id);
+      return dataManager.getClassDetails(id);
     }
 
     function save (cls) {

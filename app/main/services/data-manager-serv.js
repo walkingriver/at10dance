@@ -8,7 +8,8 @@ angular.module('main')
     var service = {
       getClasses: getClasses,
       getStudents: getStudents,
-      getItem: getById,
+      getClassDetails: getClassDetails,
+      getStudentDetails: getStudentDetails,
       setItem: setItem,
       removeItem: removeItem,
 
@@ -90,16 +91,27 @@ angular.module('main')
       return item;
     }
 
+    function getClassDetails(id) {
+      return getById('class', id);
+    }
+
+    function getStudentDetails(id) {
+      return getById('student', id);
+    }
+
     // Fetches an object from the local pool or the DB by its.
     // Returns a promise.
-    function getById(id) {
-      var item = pool[id];
+    function getById(kind, id) {
+      var item = pool[kind][id];
 
       if (item) {
-        return $q.when(item);
+        return $q.when(angular.copy(item));
       }
 
-      return loadItem(id);
+      return loadItem(id)
+        .then(function (item) {
+          return angular.copy(item);
+        });
     }
 
     // Loads an item from the DB by its ID, and adds it to the pool.
