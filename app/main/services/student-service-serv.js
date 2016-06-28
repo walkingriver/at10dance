@@ -8,6 +8,7 @@ angular.module('main')
       getAll: getAll,
       getById: getById,
       deleteStudent: deleteStudent,
+      getClassesForStudent: getClassesForStudent,
       save: save
     };
 
@@ -31,6 +32,10 @@ angular.module('main')
 
     function deleteStudent(id) {
       return dataManager.removeStudent(id);
+    }
+
+    function getClassesForStudent(student) {
+      return dataManager.getClassesForStudent(student);
     }
 
     function defaultStudent() {

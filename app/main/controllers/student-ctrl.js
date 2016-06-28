@@ -8,13 +8,18 @@ angular.module('main')
     vm.studentId = $stateParams.id;
     vm.student = {};
     vm.saveStudent = saveStudent;
+    vm.assignedClasses = [];
 
     init();
 
     function init() {
       StudentService.getById(vm.studentId)
-        .then(function(data) {
+        .then(function (data) {
           vm.student = data;
+          StudentService.getClassesForStudent(vm.student)
+            .then(function (data) {
+              vm.assignedClasses = data;
+            });
         });
     }
 

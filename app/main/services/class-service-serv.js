@@ -8,6 +8,7 @@ angular.module('main')
       getAll: getAll,
       getById: getById,
       deleteClass: deleteClass,
+      getClassesForStudent: getClassesForStudent,
       isStudentAssignedToClass: isStudentAssignedToClass,
       assignStudentToClass: assignStudentToClass,
       removeStudentFromClass: removeStudentFromClass,
@@ -50,6 +51,10 @@ angular.module('main')
 
     function removeStudentFromClass(cls, student) {
       _.pull(cls.students, student._id);
+    }
+
+    function getClassesForStudent(student) {
+      return dataManager.getClassesForStudent(student);
     }
 
     // Returns a "new" and "empty" class object.

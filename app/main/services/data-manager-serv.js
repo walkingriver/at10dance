@@ -15,6 +15,7 @@ angular.module('main')
       getClasses: getClasses,
       getStudents: getStudents,
       getClassDetails: getClassDetails,
+      getClassesForStudent: getClassesForStudent,
       getStudentDetails: getStudentDetails,
       setItem: setItem,
       removeClass: removeClass,
@@ -94,6 +95,15 @@ angular.module('main')
       }
 
       return item;
+    }
+
+    function getClassesForStudent(student) {
+      return getClasses()
+        .then(function () {
+          return _.filter(classes, function (item) {
+            return _.includes(item.students, student._id);
+          });
+        });
     }
 
     function getClassDetails(id) {
