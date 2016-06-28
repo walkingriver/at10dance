@@ -25,29 +25,17 @@ angular.module('main')
         });
     }
 
-    // Class Roster-related functions
     function isStudentAssignedToClass(student) {
-      if (student) {
-        var found = _.includes(vm.class.students, student._id);
-        return found;
-      }
-    }
-
-    function assignStudentToClass(student) {
-      vm.class.students.push(student._id);
-    }
-
-    function removeStudentFromClass(student) {
-      _.pull(vm.class.students, student._id);
+      return ClassService.isStudentAssignedToClass(vm.class, student);
     }
 
     function selectStudent(student) {
       $log.log('Student selected: ' + student);
 
-      if (isStudentAssignedToClass(student)) {
-        removeStudentFromClass(student);
+      if (ClassService.isStudentAssignedToClass(vm.class, student)) {
+        ClassService.removeStudentFromClass(vm.class, student);
       } else {
-        assignStudentToClass(student);
+        ClassService.assignStudentToClass(vm.class, student);
       }
     }
 

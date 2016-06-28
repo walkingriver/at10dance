@@ -8,6 +8,9 @@ angular.module('main')
       getAll: getAll,
       getById: getById,
       deleteClass: deleteClass,
+      isStudentAssignedToClass: isStudentAssignedToClass,
+      assignStudentToClass: assignStudentToClass,
+      removeStudentFromClass: removeStudentFromClass,
       save: save
     };
 
@@ -33,6 +36,23 @@ angular.module('main')
       return dataManager.removeClass(id);
     }
 
+    // Class Roster-related functions
+    function isStudentAssignedToClass(cls, student) {
+      if (student) {
+        var found = _.includes(cls.students, student._id);
+        return found;
+      }
+    }
+
+    function assignStudentToClass(cls, student) {
+      cls.students.push(student._id);
+    }
+
+    function removeStudentFromClass(cls, student) {
+      _.pull(cls.students, student._id);
+    }
+
+    // Returns a "new" and "empty" class object.
     function defaultClass() {
       return $q.when({
         _id: uuid.newguid(),
