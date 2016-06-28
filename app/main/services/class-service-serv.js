@@ -30,7 +30,7 @@ angular.module('main')
     }
 
     function deleteClass(id) {
-      return dataManager.removeItem(id);
+      return dataManager.removeClass(id);
     }
 
     function defaultClass() {

@@ -25,6 +25,7 @@ angular.module('main')
         });
     }
 
+    // Class Roster-related functions
     function isStudentAssignedToClass(student) {
       if (student) {
         var found = _.includes(vm.class.students, student._id);

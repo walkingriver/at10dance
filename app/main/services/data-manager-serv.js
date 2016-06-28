@@ -17,7 +17,8 @@ angular.module('main')
       getClassDetails: getClassDetails,
       getStudentDetails: getStudentDetails,
       setItem: setItem,
-      removeItem: removeItem,
+      removeClass: removeClass,
+      removeStudent: removeStudent,
 
       // Debug functions
       seedDatabase: seedDatabase,
@@ -149,14 +150,16 @@ angular.module('main')
       return db.setItem(itemToUpdate._id, itemToUpdate);
     }
 
-    function removeItem(id) {
+    function removeClass(id) {
       return db.removeItem(id)
         .then(function () {
-          // Remove it from the appropriate pool.
-          // We could use an if statement here to avoid affecting both pools,
-          // but this is simpler. There is no danger if we try to delete
-          // something that doesn't exist.
           _.remove(classes, { _id: id });
+        });
+    }
+
+    function removeStudent(id) {
+      return db.removeItem(id)
+        .then(function () {
           _.remove(students, { _id: id });
         });
     }
