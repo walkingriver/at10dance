@@ -16,7 +16,7 @@ angular.module('main')
     function refreshStudents() {
       StudentService.getAll()
         .then(function (data) {
-          vm.students = _.toArray(data);
+          vm.students = data;
         });
     }
 

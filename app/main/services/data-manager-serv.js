@@ -3,8 +3,14 @@ angular.module('main')
   .factory('dataManager', function ($http, $log, $q, Config) {
     $log.log('Hello from your dataManager in module main');
 
-    var pool = { 'class': {}, 'student': {} };
+    // Having the separate references is for convenience in referring to them.
+    var classes = [];
+    var students = [];
+    var pool = { 'class': classes, 'student': students };
+
     var db;
+
+    // Public interface
     var service = {
       getClasses: getClasses,
       getStudents: getStudents,
@@ -31,61 +37,59 @@ angular.module('main')
     // Loads all Classes from the database if necessary,
     // returning the local instance where possible.
     function getClasses() {
+      if (classes.length) {
+        return $q.when(classes);
+      }
+
       return getCollection('class');
     }
 
     // Loads all Classes from the database if necessary,
     // returning the local instance where possible.
     function getStudents() {
+      if (students.length) {
+        return $q.when(students);
+      }
+
       return getCollection('student');
     }
 
     // Actual implementation to load a collection of "things",
     // returning the local instance where possible.
     function getCollection(kind) {
-      // If there are items loaded already, just return them.
-      if (_.keys(pool[kind]).length) {
-        return $q.when(pool[kind]);
-      }
-
-      // Otherwise, we need to go get them.
       // Start by grabbing all of the keys in the database,
       // and passing that list of keys to the function to read each one.
       return db.keys()
-        .then(readAllFromDb)
-        .catch(function (err) {
+        .then(function (keys) {
+          var promises = _.map(keys, function (key) {
+            return loadItem(key)
+              .then(function (val) {
+                getInstance(val._id, val);
+              }).catch(function (err) {
+                $log.error('Error reading all items from DB: ', err);
+              });
+          });
+
+          return $q.all(promises)
+            .then(function () {
+              return $q.when(pool[kind]);
+            }).catch(function (err) {
+              $log.error('Error with the $q.all in DB: ', err);
+            });
+        }).catch(function (err) {
           $log.error('Error loading keys from DB: ', err);
         });
-
-      // Private method to read a list of objects from the database.
-      function readAllFromDb(keys) {
-        var promises = _.map(keys, function (key) {
-          return loadItem(key)
-            .then(function (val) {
-              getInstance(val._id, val);
-            }).catch(function (err) {
-              $log.error('Error reading all items from DB: ', err);
-            });
-        });
-
-        return $q.all(promises)
-          .then(function () {
-            return $q.when(pool[kind]);
-          }).catch(function (err) {
-            $log.error('Error with the $q.all in DB: ', err);
-          });
-      }
     }
 
     // Gets (or sets) and returns a specific instance of a given item by its ID.
     function getInstance(id, data) {
-      var item = pool[data.kind][id];
+      var item = _.find(pool[data.kind], { _id: id });
 
       if (item) {
         angular.extend(item, data);
       } else {
         item = data;
-        pool[data.kind][id] = data;
+        pool[data.kind].push(data);
       }
 
       return item;
@@ -102,7 +106,7 @@ angular.module('main')
     // Fetches an object from the local pool or the DB by its.
     // Returns a promise.
     function getById(kind, id) {
-      var item = pool[kind][id];
+      var item = _.find(pool[kind], { _id: id });
 
       if (item) {
         return $q.when(angular.copy(item));
@@ -129,7 +133,7 @@ angular.module('main')
     }
 
     function setItem(item) {
-      var itemToUpdate = pool[item.kind][item._id];
+      var itemToUpdate = _.find(pool[item.kind], { _id: item.id });
 
       // If we are saving an existing item, it should be in our object pool.
       if (itemToUpdate) {
@@ -152,8 +156,8 @@ angular.module('main')
           // We could use an if statement here to avoid affecting both pools,
           // but this is simpler. There is no danger if we try to delete
           // something that doesn't exist.
-          delete pool.class[id];
-          delete pool.student[id];
+          _.remove(classes, { _id: id });
+          _.remove(students, { _id: id });
         });
     }
 
@@ -189,12 +193,8 @@ angular.module('main')
         .then(function () {
           // Upon success, remove the objects from our pool.
           // Note, this needs to keep the pool references intact for the other controllers.
-          _.forEach(_.keys(pool.class), function (val) {
-            delete pool.class[val];
-          });
-          _.forEach(_.keys(pool.students), function (val) {
-            delete pool.class[val];
-          });
+          _.remove(classes, _.constant(true));
+          _.remove(students, _.constant(true));
         });
     }
   });
