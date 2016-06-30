@@ -167,11 +167,9 @@ angular.module('main')
         });
     }
 
-    function removeStudent(id) {
-      return db.removeItem(id)
-        .then(function () {
-          _.remove(students, { _id: id });
-        });
+    function removeStudent(student) {
+      student.isDeleted = true;
+      return db.setItem(student._id, student);
     }
 
     // Debugging functionality /////////////////////////////////////////////////

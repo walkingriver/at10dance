@@ -20,10 +20,10 @@ angular.module('main')
         });
     }
 
-    function deleteStudent(id) {
+    function deleteStudent(student) {
       $log.log('Deleting student.');
 
-      StudentService.deleteStudent(id)
+      StudentService.deleteStudent(student)
         .then(refreshStudents)
         .catch(function (err) {
           $log.log(err);

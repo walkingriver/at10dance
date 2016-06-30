@@ -30,8 +30,8 @@ angular.module('main')
       return dataManager.setItem(student);
     }
 
-    function deleteStudent(id) {
-      return dataManager.removeStudent(id);
+    function deleteStudent(student) {
+      return dataManager.removeStudent(student);
     }
 
     function getClassesForStudent(student) {

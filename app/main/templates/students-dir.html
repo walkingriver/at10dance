@@ -5,13 +5,12 @@
             </label>
 </form>
 <ion-list show-delete="showDelete">
-  <ion-item ng-repeat="student in items | filter:{name:search} | orderBy:'name'" 
+  <ion-item ng-repeat="student in items | filter:{name:search} | filter:showUser | orderBy:'name'" 
     class="item-remove-animate item-icon-right" ng-click="selected(student)">
     {{student.name}}
     <ion-delete-button class="ion-minus-circled"
-        ng-click="deleted(student._id)">
+        ng-click="deleted(student)">
     </ion-delete-button>
     <i class="icon {{icon}} {{color}}" ng-if="showPerson(student)" />
   </ion-item>
-  <!--<ion-item class="item-divider item">Temp Utility</ion-item>-->
 </ion-list> 
