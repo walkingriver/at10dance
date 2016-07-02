@@ -1,13 +1,13 @@
 'use strict';
 angular.module('main')
-  .controller('RosterCtrl', function ($log, $stateParams, $q, ClassService, StudentService) {
+  .controller('RosterCtrl', function ($log, $stateParams, $q, $scope, classDetail, classRoster, ClassService) {
 
     $log.log('Hello from your Controller: RosterCtrl in module main:. This is your controller:', this);
 
     var vm = this;
     vm.classId = $stateParams.id;
-    vm.class = {};
-    vm.students = [];
+    vm.class = classDetail;
+    vm.students = classRoster;
     vm.attendance = [];
     vm.isPresent = isStudentPresent;
     vm.selectStudent = selectStudent;
@@ -15,17 +15,17 @@ angular.module('main')
     init();
 
     function init() {
-      ClassService.getById(vm.classId)
+      refreshStudents();
+      $scope.$on('$stateChangeSuccess',
+        function (event, toState, toParams, fromState, fromParams) {
+          refreshStudents();
+        });
+    }
+
+    function refreshStudents() {
+      ClassService.getStudentsForClassId(vm.classId)
         .then(function (data) {
-          // In this case, we need the class info first.
-          vm.class = data;
-          StudentService.getAll()
-            .then(function (data) {
-              vm.students = _(data)
-                .keyBy('_id')
-                .at(vm.class.students)
-                .value();
-            });
+          vm.students = data;
         });
     }
 

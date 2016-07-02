@@ -9,6 +9,7 @@ angular.module('main')
       getById: getById,
       deleteClass: deleteClass,
       getClassesForStudent: getClassesForStudent,
+      getStudentsForClassId: getStudentsForClassId,
       isStudentAssignedToClass: isStudentAssignedToClass,
       assignStudentToClass: assignStudentToClass,
       removeStudentFromClass: removeStudentFromClass,
@@ -55,6 +56,11 @@ angular.module('main')
 
     function getClassesForStudent(student) {
       return dataManager.getClassesForStudent(student);
+    }
+
+    function getStudentsForClassId(id) {
+      return dataManager.getStudentsForClassId(id);
+      //return dataManager.getStudents();
     }
 
     // Returns a "new" and "empty" class object.

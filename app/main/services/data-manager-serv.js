@@ -17,6 +17,7 @@ angular.module('main')
       getClassDetails: getClassDetails,
       getClassesForStudent: getClassesForStudent,
       getStudentDetails: getStudentDetails,
+      getStudentsForClassId: getStudentsForClassId,
       setItem: setItem,
       removeClass: removeClass,
       removeStudent: removeStudent,
@@ -103,6 +104,29 @@ angular.module('main')
           return _.filter(classes, function (item) {
             return _.includes(item.students, student._id);
           });
+        });
+    }
+
+    // function getStudentsForClassId(id) {
+    //   return getById('class', id)
+    //     .then(function (cls) {
+    //       getStudents()
+    //         .then(function (data) {
+    //           var students = _(data)
+    //             .keyBy('_id')
+    //             .at(cls.students)
+    //             .value();
+    //           return students;
+    //         });
+    //     });
+    // }
+
+    function getStudentsForClassId(id) {
+      return getById('class', id)
+        .then(function (cls) {
+          return $q.all(_.map(cls.students, function (item) {
+            return getStudentDetails(item);
+          }));
         });
     }
 
