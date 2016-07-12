@@ -16,10 +16,10 @@ angular.module('main')
         });
     }
 
-    function deleteClass(id) {
+    function deleteClass(cls) {
       $log.log('Deleting class.');
 
-      ClassService.deleteClass(id)
+      ClassService.deleteClass(cls)
         .then(refreshClasses)
         .catch(function (err) {
           $log.log(err);

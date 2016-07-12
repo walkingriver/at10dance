@@ -5,7 +5,7 @@
             </label>
 </form>
 <ion-list show-delete="showDelete">
-  <ion-item ng-repeat="student in items | filter:{name:search} | filter:showUser | orderBy:'name'" 
+  <ion-item ng-repeat="student in items | filter:{name:search} | orderBy:'name'" 
     class="item-remove-animate item-icon-right" ng-click="selected(student)">
     {{student.name}}
     <ion-delete-button class="ion-minus-circled"

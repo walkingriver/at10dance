@@ -107,20 +107,6 @@ angular.module('main')
         });
     }
 
-    // function getStudentsForClassId(id) {
-    //   return getById('class', id)
-    //     .then(function (cls) {
-    //       getStudents()
-    //         .then(function (data) {
-    //           var students = _(data)
-    //             .keyBy('_id')
-    //             .at(cls.students)
-    //             .value();
-    //           return students;
-    //         });
-    //     });
-    // }
-
     function getStudentsForClassId(id) {
       return getById('class', id)
         .then(function (cls) {
@@ -158,10 +144,14 @@ angular.module('main')
       var kind, item;
       return db.getItem(id)
         .then(function (val) {
-          val.kind = val.kind || 'class'; // This is to fix some classes without a kind property.
-          kind = val.kind;
-          item = val;
-          return $q.when(getInstance(val._id, val));
+          if (val) {
+            val.kind = val.kind || 'class'; // This is to fix some classes without a kind property.
+            kind = val.kind;
+            item = val;
+            return $q.when(getInstance(val._id, val));
+          } else {
+            return $q.when(null);
+          }
         }).catch(function (err) {
           $log.error('Error loading (' + kind + ') item (' + id + ') from DB: ', item, err);
         });
@@ -184,16 +174,18 @@ angular.module('main')
       return db.setItem(itemToUpdate._id, itemToUpdate);
     }
 
-    function removeClass(id) {
-      return db.removeItem(id)
+    function removeClass(cls) {
+      return db.removeItem(cls._id)
         .then(function () {
-          _.remove(classes, { _id: id });
+          _.remove(classes, { _id: cls._id });
         });
     }
 
     function removeStudent(student) {
-      student.isDeleted = true;
-      return db.setItem(student._id, student);
+      return db.removeItem(student._id)
+        .then(function () {
+          _.remove(students, { _id: student._id });
+        });
     }
 
     // Debugging functionality /////////////////////////////////////////////////

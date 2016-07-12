@@ -34,8 +34,8 @@ angular.module('main')
       return dataManager.setItem(cls);
     }
 
-    function deleteClass(id) {
-      return dataManager.removeClass(id);
+    function deleteClass(cls) {
+      return dataManager.removeClass(cls);
     }
 
     // Class Roster-related functions
