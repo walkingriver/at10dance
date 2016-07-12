@@ -1,73 +1,55 @@
 'use strict';
 angular.module('main')
-  .service('StudentService', function ($http, $log, $q, uuid, Config) {
-
+  .factory('StudentService', function ($http, $log, $q, uuid, Config, dataManager) {
     $log.log('Hello from your Service: Student in module main');
 
-    var students = localforage.createInstance({
-      name: 'at10-students'
-    });
-
     // Public methods
-    this.getAll = getAllStudents;
+    var service = {
+      getAll: getAll,
+      getById: getById,
+      deleteStudent: deleteStudent,
+      getClassesForStudent: getClassesForStudent,
+      save: save
+    };
 
-    this.getById = function (id) {
+    return service;
+
+    // Private methods
+    function getAll() {
+      return dataManager.getStudents();
+    }
+
+    function getById(id) {
       $log.log('Requesting class details for student id = ' + id);
-      if (id === 'new') {
-        return $q.when({
-          '_id': uuid.newguid(),
-          'index': 0,
-          'picture': 'http://placehold.it/32x32',
-          'age': 0,
-          'eyeColor': '',
-          'firstname': '',
-          'lastname': '',
-          'parentFirstName': '',
-          'gender': '',
-          'email': '',
-          'phone': '',
-          'name': '',
-          'parentName': ''
-        });
-      }
+      return (id === 'new') ?
+        defaultStudent() :
+        dataManager.getStudentDetails(id);
+    }
 
-      return $q.when(students.getItem(id));
-    };
+    function save(student) {
+      return dataManager.setItem(student);
+    }
 
-    this.save = function (student) {
-      return students.setItem(student._id, student);
-    };
+    function deleteStudent(student) {
+      return dataManager.removeStudent(student);
+    }
 
-    this.deleteStudent = function (id) {
-      return students.removeItem(id);
-    };
+    function getClassesForStudent(student) {
+      return dataManager.getClassesForStudent(student);
+    }
 
-    this.seed = function () {
-      return $http.get(Config.ENV.STUDENTS_URL)
-        .success(function (data) {
-          var promises = _.map(data, function (val) {
-            return students.setItem(val._id, val);
-          });
-
-          return $q.all(promises);
-        });
-    };
-
-    this.clear = function () {
-      return students.clear();
-    };
-
-    // "Private" methods
-    function getAllStudents() {
-      var deferred = $q.defer();
-      var all = [];
-
-      students.iterate(function (value) {
-        all.push(value);
-      }, function () {
-        deferred.resolve(all);
+    function defaultStudent() {
+      return $q.when({
+        '_id': uuid.newguid(),
+        'index': 0,
+        'picture': 'http://placehold.it/32x32',
+        'age': 0,
+        gender: '',
+        email: '',
+        phone: '',
+        name: '',
+        parentName: '',
+        kind: 'student'
       });
-
-      return deferred.promise;
     }
   });

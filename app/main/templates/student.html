@@ -1,9 +1,10 @@
 <ion-view title="Student" id="page9" style="background-color:#FFFFFF;">
-  <ion-nav-buttons side="right">
-    <button class="button button-clear" ng-click="vm.saveStudent()">
+    <ion-nav-buttons side="right">
+        <button class="button button-clear" ng-click="vm.saveStudent()">
         Save
       </button>
-  </ion-nav-buttons>    <ion-content padding="true" class="has-header">
+    </ion-nav-buttons>
+    <ion-content padding="true" class="has-header">
         <div class="list card">
             <div class="item item-divider">{{vm.student.name}}</div>
             <div class="item item-body">
@@ -31,7 +32,10 @@
                     </label>
                 </form>
             </div>
+            <div class="item item-divider">Assigned Classes</div>
+            <div class="item item-body" ng-repeat="cls in vm.assignedClasses">
+                {{cls.name}}                
+            </div>
         </div>
-        <form class="list"></form>
     </ion-content>
 </ion-view>

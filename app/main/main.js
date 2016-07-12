@@ -84,7 +84,18 @@ angular.module('main', [
         url: '/roster/:id',
         templateUrl: 'main/templates/roster.html',
         controller: 'RosterCtrl',
-        controllerAs: 'vm'
+        controllerAs: 'vm',
+        resolve: {
+          ClassService: 'ClassService',
+          classDetail: function($stateParams, ClassService) {
+            var id = $stateParams.id;
+            return ClassService.getById(id);
+          },
+          classRoster: function($stateParams, ClassService) {
+            var id = $stateParams.id;
+            return ClassService.getStudentsForClassId(id);
+          }
+        }
       });
   });
 

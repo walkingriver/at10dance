@@ -1,63 +1,75 @@
 'use strict';
 angular.module('main')
-  .service('ClassService', function ($http, $log, $q, uuid, Config) {
-
+  .factory('ClassService', function ($http, $log, $q, uuid, Config, dataManager) {
     $log.log('Hello from your Service: ClassService in module main');
 
-    var classes = localforage.createInstance({
-      name: 'at10-classes'
-    });
-
     // Public methods
-    this.getAll = getAllClasses;
+    var service = {
+      getAll: getAll,
+      getById: getById,
+      deleteClass: deleteClass,
+      getClassesForStudent: getClassesForStudent,
+      getStudentsForClassId: getStudentsForClassId,
+      isStudentAssignedToClass: isStudentAssignedToClass,
+      assignStudentToClass: assignStudentToClass,
+      removeStudentFromClass: removeStudentFromClass,
+      save: save
+    };
 
-    this.getById = function (id) {
+    return service;
+
+    // Private methods
+    function getAll() {
+      return dataManager.getClasses();
+    }
+
+    function getById(id) {
       $log.log('Requesting class details for class id = ' + id);
-      if (id === 'new') {
-        return $q.when({
-          _id: uuid.newguid(),
-          name: 'New Class',
-          students: []
-        });
+      return (id === 'new') ?
+        defaultClass() :
+        dataManager.getClassDetails(id);
+    }
+
+    function save(cls) {
+      return dataManager.setItem(cls);
+    }
+
+    function deleteClass(cls) {
+      return dataManager.removeClass(cls);
+    }
+
+    // Class Roster-related functions
+    function isStudentAssignedToClass(cls, student) {
+      if (student) {
+        var found = _.includes(cls.students, student._id);
+        return found;
       }
+    }
 
-      return $q.when(classes.getItem(id));
-    };
+    function assignStudentToClass(cls, student) {
+      cls.students.push(student._id);
+    }
 
-    this.save = function (cls) {
-      return classes.setItem(cls._id, cls);
-    };
+    function removeStudentFromClass(cls, student) {
+      _.pull(cls.students, student._id);
+    }
 
-    this.deleteClass = function (id) {
-      return classes.removeItem(id);
-    };
+    function getClassesForStudent(student) {
+      return dataManager.getClassesForStudent(student);
+    }
 
-    this.seed = function () {
-      return $http.get(Config.ENV.CLASSES_URL)
-        .success(function (data) {
-          var promises = _.map(data, function (val) {
-            return classes.setItem(val._id, val);
-          });
+    function getStudentsForClassId(id) {
+      return dataManager.getStudentsForClassId(id);
+      //return dataManager.getStudents();
+    }
 
-          return $q.all(promises);
-        });
-    };
-
-    this.clear = function () {
-      return classes.clear();
-    };
-
-    // "Private" methods
-    function getAllClasses() {
-      var deferred = $q.defer();
-      var allClasses = {};
-
-      classes.iterate(function (value, key) {
-        allClasses[key] = value;
-      }, function () {
-        deferred.resolve(allClasses);
+    // Returns a "new" and "empty" class object.
+    function defaultClass() {
+      return $q.when({
+        _id: uuid.newguid(),
+        name: 'New Class',
+        kind: 'class',
+        students: []
       });
-
-      return deferred.promise;
     }
   });

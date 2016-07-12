@@ -4,10 +4,13 @@
                 <input type="search" placeholder="" ng-model="search">
             </label>
 </form>
-<ion-list>
-  <ion-item ng-repeat="student in items | filter:{name:search}" class="item-icon-right" ng-click="selected(student)">{{student.name}}
+<ion-list show-delete="showDelete">
+  <ion-item ng-repeat="student in items | filter:{name:search} | orderBy:'name'" 
+    class="item-remove-animate item-icon-right" ng-click="selected(student)">
+    {{student.name}}
+    <ion-delete-button class="ion-minus-circled"
+        ng-click="deleted(student)">
+    </ion-delete-button>
     <i class="icon {{icon}} {{color}}" ng-if="showPerson(student)" />
-    <ion-option-button class="button button-assertive" ng-click="vm.deleteClass(class._id)">Delete
   </ion-item>
-  <ion-item class="item-divider item">Temp Utility</ion-item>
-</ion-list>
+</ion-list> 

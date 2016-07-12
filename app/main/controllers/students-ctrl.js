@@ -1,14 +1,16 @@
 'use strict';
 angular.module('main')
   .controller('StudentsCtrl', function ($log, $q, $scope, $state, StudentService) {
-
     $log.log('Hello from your Controller: StudentsCtrl in module main:. This is your controller:', this);
 
     var vm = this;
     vm.deleteStudent = deleteStudent;
-    vm.seedStudents = seedStudents;
+    vm.selectStudent = selectStudent;
+    vm.toggleDelete = toggleDelete;
+    vm.showDelete = false;
+    vm.showPerson = _.noop;
+    vm.students = [];
 
-    $scope.$watch(refreshStudents);
     refreshStudents();
 
     function refreshStudents() {
@@ -18,23 +20,21 @@ angular.module('main')
         });
     }
 
-    function deleteStudent(id) {
+    function deleteStudent(student) {
       $log.log('Deleting student.');
 
-      StudentService.deleteStudent(id)
+      StudentService.deleteStudent(student)
+        .then(refreshStudents)
         .catch(function (err) {
           $log.log(err);
         });
     }
 
-    function seedStudents() {
-      StudentService.seed();
+    function toggleDelete() {
+      vm.showDelete = !vm.showDelete;
     }
 
-    vm.selectStudent = function (student) {
+    function selectStudent(student) {
       $state.go('tabsController.student', { id: student._id });
-    };
-
-    vm.showPerson = _.noop;
-
+    }
   });

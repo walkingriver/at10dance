@@ -1,7 +1,6 @@
 'use strict';
 angular.module('main')
   .controller('ClassCtrl', function ($log, $q, $state, $stateParams, ClassService, StudentService) {
-
     $log.log('Hello from your Controller: ClassCtrl in module main:. This is your controller:', this);
 
     var vm = this;
@@ -22,32 +21,21 @@ angular.module('main')
 
       StudentService.getAll()
         .then(function (data) {
-          $q.defer(vm.students = data);
+          $q.defer(vm.students = _.toArray(data));
         });
     }
 
     function isStudentAssignedToClass(student) {
-      if (student) {
-        var found = _.includes(vm.class.students, student._id);
-        return found;
-      }
-    }
-
-    function assignStudentToClass(student) {
-      vm.class.students.push(student._id);
-    }
-
-    function removeStudentFromClass(student) {
-      _.pull(vm.class.students, student._id);
+      return ClassService.isStudentAssignedToClass(vm.class, student);
     }
 
     function selectStudent(student) {
       $log.log('Student selected: ' + student);
 
-      if (isStudentAssignedToClass(student)) {
-        removeStudentFromClass(student);
+      if (ClassService.isStudentAssignedToClass(vm.class, student)) {
+        ClassService.removeStudentFromClass(vm.class, student);
       } else {
-        assignStudentToClass(student);
+        ClassService.assignStudentToClass(vm.class, student);
       }
     }
 
