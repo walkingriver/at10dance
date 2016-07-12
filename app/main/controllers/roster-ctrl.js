@@ -11,21 +11,23 @@ angular.module('main')
     vm.attendance = [];
     vm.isPresent = isStudentPresent;
     vm.selectStudent = selectStudent;
+    vm.doRefresh = refreshStudents;
 
     init();
 
     function init() {
       refreshStudents();
-      $scope.$on('$stateChangeSuccess',
-        function (event, toState, toParams, fromState, fromParams) {
-          refreshStudents();
-        });
+      // $scope.$on('$ionicView.beforeEnter',
+      //   function (event, toState, toParams, fromState, fromParams) {
+      //     refreshStudents();
+      //   });
     }
 
     function refreshStudents() {
       ClassService.getStudentsForClassId(vm.classId)
         .then(function (data) {
           vm.students = data;
+          $scope.$broadcast('scroll.refreshComplete');
         });
     }
 
