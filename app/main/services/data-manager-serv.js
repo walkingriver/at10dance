@@ -67,7 +67,7 @@ angular.module('main')
           var promises = _.map(keys, function (key) {
             return loadItem(key)
               .then(function (val) {
-                getInstance(val._id, val);
+                poolReference(val._id, val);
               }).catch(function (err) {
                 $log.error('Error reading all items from DB: ', err);
               });
@@ -84,8 +84,8 @@ angular.module('main')
         });
     }
 
-    // Gets (or sets) and returns a specific instance of a given item by its ID.
-    function getInstance(id, data) {
+    // Returns a specific instance of a given item by its ID, adding it to the pool if necessary.
+    function poolReference(id, data) {
       var item = _.find(pool[data.kind], { _id: id });
 
       if (item) {
@@ -148,7 +148,7 @@ angular.module('main')
             val.kind = val.kind || 'class'; // This is to fix some classes without a kind property.
             kind = val.kind;
             item = val;
-            return $q.when(getInstance(val._id, val));
+            return $q.when(poolReference(val._id, val));
           } else {
             return $q.when(null);
           }
@@ -166,7 +166,7 @@ angular.module('main')
       } else {
         // If not, it's probably a new item. We need to add it to our pool
         // and then we can save it.
-        itemToUpdate = getInstance(item._id, item);
+        itemToUpdate = poolReference(item._id, item);
       }
 
       // Regardless of how we got here, we want to save it.
