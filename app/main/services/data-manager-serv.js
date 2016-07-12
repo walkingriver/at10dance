@@ -84,6 +84,23 @@ angular.module('main')
         });
     }
 
+    // Loads an item from the DB by its ID, and adds it to the pool.
+    function loadItem(id) {
+      var kind, item;
+      return db.getItem(id)
+        .then(function (val) {
+          if (val) {
+            kind = val.kind;
+            item = val;
+            return $q.when(poolReference(val._id, val));
+          } else {
+            return $q.when(null);
+          }
+        }).catch(function (err) {
+          $log.error('Error loading (' + kind + ') item (' + id + ') from DB: ', item, err);
+        });
+    }
+
     // Returns a specific instance of a given item by its ID, adding it to the pool if necessary.
     function poolReference(id, data) {
       var item = _.find(pool[data.kind], { _id: id });
@@ -96,24 +113,6 @@ angular.module('main')
       }
 
       return item;
-    }
-
-    function getClassesForStudent(student) {
-      return getClasses()
-        .then(function () {
-          return _.filter(classes, function (item) {
-            return _.includes(item.students, student._id);
-          });
-        });
-    }
-
-    function getStudentsForClassId(id) {
-      return getById('class', id)
-        .then(function (cls) {
-          return $q.all(_.map(cls.students, function (item) {
-            return getStudentDetails(item);
-          }));
-        });
     }
 
     function getClassDetails(id) {
@@ -136,24 +135,6 @@ angular.module('main')
       return loadItem(id)
         .then(function (item) {
           return angular.copy(item);
-        });
-    }
-
-    // Loads an item from the DB by its ID, and adds it to the pool.
-    function loadItem(id) {
-      var kind, item;
-      return db.getItem(id)
-        .then(function (val) {
-          if (val) {
-            val.kind = val.kind || 'class'; // This is to fix some classes without a kind property.
-            kind = val.kind;
-            item = val;
-            return $q.when(poolReference(val._id, val));
-          } else {
-            return $q.when(null);
-          }
-        }).catch(function (err) {
-          $log.error('Error loading (' + kind + ') item (' + id + ') from DB: ', item, err);
         });
     }
 
@@ -185,6 +166,24 @@ angular.module('main')
       return db.removeItem(student._id)
         .then(function () {
           _.remove(students, { _id: student._id });
+        });
+    }
+
+    function getClassesForStudent(student) {
+      return getClasses()
+        .then(function () {
+          return _.filter(classes, function (item) {
+            return _.includes(item.students, student._id);
+          });
+        });
+    }
+
+    function getStudentsForClassId(id) {
+      return getById('class', id)
+        .then(function (cls) {
+          return $q.all(_.map(cls.students, function (item) {
+            return getStudentDetails(item);
+          }));
         });
     }
 
